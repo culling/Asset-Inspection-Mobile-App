@@ -1,0 +1,7 @@
+{
+  "name": "Asset Recorder",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
