@@ -29,10 +29,14 @@ const Page: React.FC = () => {
         {/* <ExploreContainer name={name} /> */}
         {name === "Home" &&
           <HomeContainer name={name} />
+        }        
+        {name === "Photo" &&
+        <ExploreContainer name={name} />
         }
-        {name !== "Home" &&
+        {name !== "Home" && name !== "Photo" &&
           <ExploreContainer name={name} />
         }
+
       </IonContent>
     </IonPage>
   );

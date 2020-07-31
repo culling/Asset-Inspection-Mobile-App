@@ -12,7 +12,18 @@ import {
 
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { archiveOutline, archiveSharp, bookmarkOutline, bookmarkSharp, settingsOutline, settingsSharp, homeOutline, homeSharp } from 'ionicons/icons';
+import {
+  archiveOutline,
+  archiveSharp,
+  bookmarkOutline,
+  bookmarkSharp,
+  settingsOutline,
+  settingsSharp,
+  homeOutline,
+  homeSharp,
+  cameraOutline,
+  cameraSharp
+} from 'ionicons/icons';
 import './Menu.css';
 
 interface AppPage {
@@ -28,6 +39,12 @@ const appPages: AppPage[] = [
     url: '/page/Home',
     iosIcon: homeOutline,
     mdIcon: homeSharp
+  },
+  {
+    title: 'Photo',
+    url: '/page/Photo',
+    iosIcon: cameraOutline,
+    mdIcon: cameraSharp
   },
   {
     title: 'New Session',
