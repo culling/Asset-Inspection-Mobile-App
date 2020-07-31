@@ -1,7 +1,8 @@
 import { createContext } from 'react';
 
 export interface Asset {
-    location: string;
+    latitude: string;
+    longitude: string;
     time : string;
     assetType?: string;
     assetIdText: string;
