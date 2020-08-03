@@ -1,9 +1,9 @@
 import React from 'react';
-import './Default.css';
+import './../Default.css';
 
 import { IonButton } from '@ionic/react';
 import axios from 'axios';
-import { Assets, AssetsContextConsumer } from '../models/AssetContext';
+import { Assets, AssetsContextConsumer } from '../../models/AssetContext';
 
 
 interface ContainerProps {
@@ -39,11 +39,17 @@ const UploadContainer: React.FC<ContainerProps> = ({ name }) => {
             //   , "assetIdText": "22ded"
             //   , "serialNumberText": "33dde"
             // }
-
-            const asset = context.assets.pop();
-            axios.post('https://assetrecorder-postgress-1.herokuapp.com/assets', asset)
-              .then(response => console.log("Response: " + JSON.stringify(response)));
-            
+            console.log("Assets:", context.assets);
+            while (context.assets.length > 0) {
+              const asset = context.assets.pop();
+              if (asset === undefined) {
+                console.log("asset not ready to be uploaded\n", "asset is undefined");
+                return;
+              }
+              console.log("Asset:", asset);
+              axios.post('https://assetrecorder-postgress-1.herokuapp.com/assets', asset)
+                .then(response => console.log("Response: " + JSON.stringify(response)));
+            }
           }
           }>Save to Cloud
           </IonButton>

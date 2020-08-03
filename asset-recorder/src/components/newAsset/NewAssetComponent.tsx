@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
 
-import MapSection from './map/Map' // import the map here
+import MapSection from '../map/Map' // import the map here
 
 import { IonContent, IonImg, IonButton, IonText, IonInput, IonLabel } from '@ionic/react';
 
@@ -19,7 +19,7 @@ const INITIAL_STATE = {
 
 
 import { Plugins, CameraResultType } from '@capacitor/core';
-import { Assets, AssetsContextConsumer } from '../models/AssetContext';
+import { Assets, AssetsContextConsumer } from '../../models/AssetContext';
 const { Camera } = Plugins;
 
 
@@ -191,7 +191,7 @@ export class NewAssetComponent extends Component {
                     }
                   ];
 
-                window.location.href = "/page/NewAsset"
+                this.setState({... INITIAL_STATE});
                 console.log(context.assets);
               }//Close onClick method
 
@@ -199,7 +199,10 @@ export class NewAssetComponent extends Component {
               }>Save</IonButton>
             )}
           </AssetsContextConsumer>
-          <a href="/page/NewAsset"><IonButton>Clear</IonButton></a>
+          <IonButton onClick={(e)=>{
+            console.log("clear clicked");
+            this.setState({... INITIAL_STATE});
+          }}>Clear</IonButton>
 
         </div>
       </IonContent>

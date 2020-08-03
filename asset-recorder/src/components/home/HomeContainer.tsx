@@ -1,5 +1,5 @@
 import React from 'react';
-import './Default.css';
+import './../Default.css';
 
 interface ContainerProps {
   name: string;
