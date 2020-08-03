@@ -2,6 +2,7 @@ import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, Io
 import React from 'react';
 import { useParams } from 'react-router';
 import ExploreContainer from '../components/ExploreContainer';
+import UploadContainer from '../components/UploadContainer';
 import HomeContainer from '../components/HomeContainer';
 import './Page.css';
 
@@ -29,11 +30,14 @@ const Page: React.FC = () => {
         {/* <ExploreContainer name={name} /> */}
         {name === "Home" &&
           <HomeContainer name={name} />
-        }        
-        {name === "Photo" &&
+        }
+        {name === "New Asset" &&
         <ExploreContainer name={name} />
         }
-        {name !== "Home" && name !== "Photo" &&
+        {name === "Upload" &&
+          <UploadContainer name={name} />
+        }
+        {name !== "Home" && name !== "NewAsset" && name !== "Upload" &&
           <ExploreContainer name={name} />
         }
 

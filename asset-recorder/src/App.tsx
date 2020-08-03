@@ -1,6 +1,6 @@
 import Menu from './components/Menu';
 import Page from './pages/Page';
-import Photo from './pages/Photo';
+import NewAsset from './pages/NewAsset';
 import React from 'react';
 import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
@@ -25,10 +25,15 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+
+/* Import models */
+import {Asset, AssetsContextProvider} from "./models/AssetContext";
+
 const App: React.FC = () => {
 
   return (
     <IonApp>
+      <AssetsContextProvider value={{assets: [] as Asset[]}}>
       <IonReactRouter>
         <IonSplitPane contentId="main">
           <Menu />
@@ -36,11 +41,12 @@ const App: React.FC = () => {
             <Route path="/page/:name" component={Page} exact />
             <Redirect from="/" to="/page/Home" exact />
 
-            <Route path="/page/Photo" component={Photo} exact />
+            <Route path="/page/NewAsset" component={NewAsset} exact />
 
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>
+      </AssetsContextProvider>
     </IonApp>
   );
 };

@@ -41,14 +41,14 @@ const appPages: AppPage[] = [
     mdIcon: homeSharp
   },
   {
-    title: 'Photo',
-    url: '/page/Photo',
+    title: 'New Asset',
+    url: '/page/NewAsset',
     iosIcon: cameraOutline,
     mdIcon: cameraSharp
   },
   {
-    title: 'New Session',
-    url: '/page/NewSession',
+    title: 'Upload To Cloud',
+    url: '/page/Upload',
     iosIcon: bookmarkOutline,
     mdIcon: bookmarkSharp
   },
@@ -78,7 +78,13 @@ const Menu: React.FC = () => {
           {appPages.map((appPage, index) => {
             return (
               <IonMenuToggle key={index} autoHide={false}>
-                <IonItem className={location.pathname === appPage.url ? 'selected' : ''} routerLink={appPage.url} routerDirection="none" lines="none" detail={false}>
+                <IonItem 
+                  className={location.pathname === appPage.url ? 'selected' : ''} 
+                  routerLink={appPage.url} 
+                  routerDirection="none" 
+                  lines="none" 
+                  detail={false}
+                >
                   <IonIcon slot="start" ios={appPage.iosIcon} md={appPage.mdIcon} />
                   <IonLabel>{appPage.title}</IonLabel>
                 </IonItem>

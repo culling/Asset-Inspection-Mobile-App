@@ -6,13 +6,14 @@ export interface Asset {
     time : string;
     assetType?: string;
     assetIdText: string;
-    assetIdPhoto?: any;
+    assetIdNewAsset?: any;
     serialNumberText: string;
     serialNumberPhoto?: any;
+    company?: string;
 }
 
 export interface Assets {
-    Assets : Asset[];
+    assets : Asset[];
 }
 
 let AssetsContext = createContext({} as Assets);
