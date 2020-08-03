@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './../Default.css';
 
-import { IonButton } from '@ionic/react';
+import { IonButton,  IonToast } from '@ionic/react';
 import axios from 'axios';
 import { Assets, AssetsContextConsumer } from '../../models/AssetContext';
 
@@ -22,24 +22,18 @@ interface ContainerProps {
 // }
 
 const UploadContainer: React.FC<ContainerProps> = ({ name }) => {
+  const [successfulUploadToast, setSuccessfulUploadToast] = useState(false);
+  const [noUnsyncedAssetsToast, setNoUnsyncedAssetsToast] = useState(false);
   return (
     <div className="container">
       <AssetsContextConsumer>
         {(context: Assets) => (
+          <div>
           <IonButton onClick={e => {
             console.log("Save All Clicked");
 
-            // componentDidMount() {
-            // Simple POST request with a JSON body using axios
-            // const asset = {
-            //   "latitude": 100000
-            //   , "longitude": 10
-            //   , "inspection_time": "1111"
-            //   , "assetType": "Test"
-            //   , "assetIdText": "22ded"
-            //   , "serialNumberText": "33dde"
-            // }
             console.log("Assets:", context.assets);
+
             while (context.assets.length > 0) {
               const asset = context.assets.pop();
               if (asset === undefined) {
@@ -48,14 +42,34 @@ const UploadContainer: React.FC<ContainerProps> = ({ name }) => {
               }
               console.log("Asset:", asset);
               axios.post('https://assetrecorder-postgress-1.herokuapp.com/assets', asset)
-                .then(response => console.log("Response: " + JSON.stringify(response)));
-            }
+                .then(response => {
+                  console.log("Response: " + JSON.stringify(response));
+                  if(context.assets.length === 0){
+                    setSuccessfulUploadToast(true);
+                  }
+                });
+
+              }
+
           }
           }>Save to Cloud
           </IonButton>
+          <IonToast
+        isOpen={successfulUploadToast}
+        onDidDismiss={() => setSuccessfulUploadToast(false)}
+        message="Local asset inventory has been uploaded and cleared."
+        duration={5000}
+      />
+      <IonToast
+        isOpen={noUnsyncedAssetsToast}
+        onDidDismiss={() => setNoUnsyncedAssetsToast(false)}
+        message="Local asset inventory has been uploaded and cleared."
+        duration={5000}
+      />
+          </div>
         )}
       </AssetsContextConsumer>
-
+      
     </div>
 
   );
