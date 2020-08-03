@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
 
-import MapSection from './../components/map/Map' // import the map here
+import MapSection from './map/Map' // import the map here
 
 import { IonButtons, IonMenuButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonImg, IonFab, IonFabButton, IonIcon, IonButton, IonText, IonInput, IonLabel } from '@ionic/react';
 
@@ -27,7 +27,7 @@ const { Camera } = Plugins;
 
 
  
-export class NewAsset extends Component {
+export class NewAssetComponent extends Component {
   state: any = {};
   // props: any = {};
   constructor(props: any) {
@@ -91,18 +91,15 @@ export class NewAsset extends Component {
   render() {
     const {  latitude, longitude, assetIdPhoto, assetId, serialNumberPhoto,serialNumber,assetType, company } = this.state;
     return (
-      <IonPage>
-
-
-
-        <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
-          <IonTitle>New Asset</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      // <IonPage>
+      //  <IonHeader>
+      //   <IonToolbar>
+      //     <IonButtons slot="start">
+      //       <IonMenuButton />
+      //     </IonButtons>
+      //     <IonTitle>New Asset</IonTitle>
+      //   </IonToolbar>
+      // </IonHeader>
 
 
         <IonContent className="ion-padding">
@@ -164,9 +161,7 @@ export class NewAsset extends Component {
             }></IonInput>
 
 
-        </IonContent>
-
-        <AssetsContextConsumer>
+<AssetsContextConsumer>
         {(context : Assets) => (
         <IonButton onClick={e=> {
           console.log("Save Clicked");
@@ -202,8 +197,10 @@ export class NewAsset extends Component {
         }>Save</IonButton>
         )}
           </AssetsContextConsumer>
-      </IonPage >
+
+        </IonContent>
+      // </IonPage >
     );
   };
 }
-export default NewAsset;
+export default NewAssetComponent;
