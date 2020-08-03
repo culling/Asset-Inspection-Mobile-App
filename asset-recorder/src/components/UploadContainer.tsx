@@ -2,8 +2,8 @@ import React from 'react';
 import './Default.css';
 
 import { IonButton } from '@ionic/react';
-import axios, { AxiosRequestConfig, AxiosPromise } from 'axios';
-import { Assets, AssetsContextConsumer, AssetsContextProvider } from '../models/AssetContext';
+import axios from 'axios';
+import { Assets, AssetsContextConsumer } from '../models/AssetContext';
 
 
 interface ContainerProps {

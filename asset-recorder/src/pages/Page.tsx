@@ -11,10 +11,6 @@ import './Page.css';
 
 const Page: React.FC = () => {
 
-  function prop<T, K extends keyof T>(obj: T, key: K) {
-    return obj[key];
-  }
-
   const { name } = useParams<{ name: string; }>();
   function getDisplayName() {
     interface IDisplayNames{
@@ -26,10 +22,9 @@ const Page: React.FC = () => {
     };
     
     let displayName :string = name;
-    if (Object.keys(displayNames).includes(name) == true) {
+    if (Object.keys(displayNames).includes(name) === true) {
       displayName = displayNames[name];
     }
-    // let keyValues = Object.entries(displayNames);
     
     return displayName;
   }
