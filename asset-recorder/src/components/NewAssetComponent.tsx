@@ -171,7 +171,7 @@ export class NewAssetComponent extends Component {
           context.assets.push(
             {latitude: latitude,
             longitude: longitude,
-            time : Date.now().toString(),
+            inspection_time :  Date.now().toString(),
             assetType: assetType,
             assetIdText: assetId,
             serialNumberText: serialNumber,
@@ -181,7 +181,7 @@ export class NewAssetComponent extends Component {
           context.assets = [
             {latitude: latitude,
             longitude: longitude,
-            time : Date.now().toString(),
+            inspection_time :  Date.now().toString(),
             assetType: assetType,
             assetIdText: assetId,
             serialNumberText: serialNumber,

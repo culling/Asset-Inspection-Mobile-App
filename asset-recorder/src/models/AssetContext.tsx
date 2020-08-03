@@ -3,7 +3,7 @@ import { createContext } from 'react';
 export interface Asset {
     latitude: string;
     longitude: string;
-    time : string;
+    inspection_time : string;
     assetType?: string;
     assetIdText: string;
     assetIdNewAsset?: any;
