@@ -1,4 +1,5 @@
 import { createContext } from 'react';
+import { Plugins } from '@capacitor/core';
 
 export interface Asset {
     latitude: string;
@@ -15,6 +16,17 @@ export interface Asset {
 export interface Assets {
     assets : Asset[];
 }
+
+
+const { Storage } = Plugins;
+
+export async function saveAssets(assets: Assets) {
+    await Storage.set({
+        key: 'assets',
+        value: JSON.stringify(assets)
+    });
+}
+
 
 let AssetsContext = createContext({} as Assets);
 

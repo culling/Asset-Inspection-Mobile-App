@@ -1,7 +1,7 @@
 import React from 'react';
 import '../Default.css';
-import { IonList, IonContent } from '@ionic/react';
-import { AssetsContextConsumer, Assets } from '../../models/AssetContext';
+import { IonList, IonContent, IonButton } from '@ionic/react';
+import { AssetsContextConsumer, Assets } from '../../models/AssetsContext';
 import AssetListItem from '../assetListItem/AssetListItem';
 
 interface ContainerProps {
@@ -9,6 +9,8 @@ interface ContainerProps {
 }
 
 const CurrentSessionContainer: React.FC<ContainerProps> = ({ name }) => {
+
+
 
   return (
     <IonContent>
@@ -18,7 +20,7 @@ const CurrentSessionContainer: React.FC<ContainerProps> = ({ name }) => {
             {(context.assets.length >0) ?
             <IonList>
             {context.assets.map((asset, i)=>{
-                return <AssetListItem key={i} asset={asset} deletable={true}></AssetListItem>
+                return <AssetListItem key={i} asset={asset} deletable={true} />
             }
               
             )}
@@ -28,6 +30,10 @@ const CurrentSessionContainer: React.FC<ContainerProps> = ({ name }) => {
         )}
         </AssetsContextConsumer>
         </IonList>
+        <IonButton onClick={e=>{
+          console.log("Delete elements");
+
+          }}>Delete</IonButton>
     </IonContent>
 
   );

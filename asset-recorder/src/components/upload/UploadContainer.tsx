@@ -3,7 +3,7 @@ import './../Default.css';
 
 import { IonButton,  IonToast } from '@ionic/react';
 import axios from 'axios';
-import { Assets, AssetsContextConsumer } from '../../models/AssetContext';
+import { Assets, AssetsContextConsumer } from '../../models/AssetsContext';
 
 
 interface ContainerProps {
