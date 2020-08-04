@@ -1,6 +1,6 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState} from 'react';
 import { SettingsContextConsumer, Settings } from '../../models/SettingsContext';
-import { IonLabel, IonInput, IonButton, IonContent, IonListHeader, IonList, IonItem } from '@ionic/react';
+import { IonLabel, IonInput, IonButton, IonContent, IonList, IonItem } from '@ionic/react';
 
 
 interface ContainerProps {
@@ -9,7 +9,7 @@ interface ContainerProps {
 
 const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
   const [company, setCompany] = useState("");
-  const [defaultAssetType, setDefaultAssetType] = useState("Computer");
+  // const [defaultAssetType, setDefaultAssetType] = useState("Computer");
 
 
   return (

@@ -1,8 +1,5 @@
 class ServerConverter{
-    constructor(){
-
-    }
-
+    
     convert = (sqlJson) => {
         return {
             latitude: sqlJson.latitude,

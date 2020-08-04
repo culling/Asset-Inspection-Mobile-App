@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import '../Default.css';
-import { IonList, IonListHeader, IonContent } from '@ionic/react';
-import { AssetsContextConsumer, Assets } from '../../models/AssetContext';
+import { IonList, IonContent } from '@ionic/react';
 import AssetListItem from '../assetListItem/AssetListItem';
 import axios from 'axios';
 
@@ -17,25 +16,25 @@ const PreviousSessionsContainer: React.FC<ContainerProps> = ({ name }) => {
 
   let isRendered = useRef(false);
 
+  
+  const getPreviousAssets = () =>{
+    console.log("previousAssets.map: ", previousAssets.map);
+    const url= "https://assetrecorder-postgress-1.herokuapp.com/assets";
+    axios.get(url).then((res) => {
+        if (!isRendered.current){
+          console.log(res.data);
+          setPreviousAssets(res.data);
+        }
+    });
+  }
+
+
   useEffect(() => {
     getPreviousAssets();
     return () => {
       isRendered.current = true;
     };
   }, []);
-
-  function getPreviousAssets(){
-    console.log("previousAssets.map: ", previousAssets.map);
-
-    const url= "https://assetrecorder-postgress-1.herokuapp.com/assets";
-    axios.get(url).then((res) => {
-        if (!isRendered.current){
-          console.log(res.data);
-
-          setPreviousAssets(res.data);
-        }
-    });
-  }
 
   function convertFromServer(serverJson : any){
     let serverConverter = new ServerConverter();

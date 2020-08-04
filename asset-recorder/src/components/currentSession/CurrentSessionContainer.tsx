@@ -1,6 +1,6 @@
 import React from 'react';
 import '../Default.css';
-import { IonList, IonListHeader, IonContent } from '@ionic/react';
+import { IonList, IonContent } from '@ionic/react';
 import { AssetsContextConsumer, Assets } from '../../models/AssetContext';
 import AssetListItem from '../assetListItem/AssetListItem';
 

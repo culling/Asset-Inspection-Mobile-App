@@ -28,7 +28,7 @@ const { Camera } = Plugins;
 
 
 export class NewAssetComponent extends Component {
-  state: any = {  ...INITIAL_STATE};
+  state: any = {...INITIAL_STATE};
   // constructor(props: any) {
   //   super(props);
   //   this.state = { ...INITIAL_STATE };
@@ -190,7 +190,7 @@ export class NewAssetComponent extends Component {
                     }
                   ];
 
-                this.setState({... INITIAL_STATE});
+                this.setState({...INITIAL_STATE});
                 console.log(context.assets);
               }//Close onClick method
 
@@ -200,7 +200,7 @@ export class NewAssetComponent extends Component {
           </AssetsContextConsumer>
           <IonButton onClick={(e)=>{
             console.log("clear clicked");
-            this.setState({... INITIAL_STATE});
+            this.setState({...INITIAL_STATE});
           }} expand="block">Clear</IonButton>
 
         </div>
