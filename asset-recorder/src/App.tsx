@@ -28,11 +28,13 @@ import './theme/variables.css';
 
 /* Import models */
 import {Asset, AssetsContextProvider} from "./models/AssetContext";
+import {Settings, SettingsContextProvider} from "./models/SettingsContext";
 
 const App: React.FC = () => {
 
   return (
     <IonApp>
+      <SettingsContextProvider value={ {company: "Acme. Inc"} as Settings }></SettingsContextProvider>
       <AssetsContextProvider value={{assets: [] as Asset[]}}>
       <IonReactRouter>
         <IonSplitPane contentId="main">

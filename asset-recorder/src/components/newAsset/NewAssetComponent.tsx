@@ -20,6 +20,7 @@ const INITIAL_STATE = {
 
 import { Plugins, CameraResultType } from '@capacitor/core';
 import { Assets, AssetsContextConsumer } from '../../models/AssetContext';
+import { SettingsContextConsumer, Settings } from '../../models/SettingsContext';
 const { Camera } = Plugins;
 
 
@@ -27,7 +28,7 @@ const { Camera } = Plugins;
 
 
 export class NewAssetComponent extends Component {
-  state: any = { ...INITIAL_STATE };
+  state: any = {  ...INITIAL_STATE};
   // constructor(props: any) {
   //   super(props);
   //   this.state = { ...INITIAL_STATE };
@@ -86,18 +87,13 @@ export class NewAssetComponent extends Component {
     })
   }
 
+  
   render() {
-    const { latitude, longitude, assetIdPhoto, assetId, serialNumberPhoto, serialNumber, assetType, company } = this.state;
+    const { latitude, longitude, assetIdPhoto, assetId, serialNumberPhoto, serialNumber, company, assetType } = this.state;
+
+
+
     return (
-      // <IonPage>
-      //  <IonHeader>
-      //   <IonToolbar>
-      //     <IonButtons slot="start">
-      //       <IonMenuButton />
-      //     </IonButtons>
-      //     <IonTitle>New Asset</IonTitle>
-      //   </IonToolbar>
-      // </IonHeader>
 
 
       <IonContent className="ion-padding">
@@ -140,24 +136,27 @@ export class NewAssetComponent extends Component {
 
         <div>
           <IonLabel>Serial Number</IonLabel>
-          <IonInput id="serialNumber" value={serialNumber} placeholder="serial number" onIonChange={
+          <IonInput id="serialNumber" value={serialNumber} placeholder="Serial number" onIonChange={
             e => { this.setState({ serialNumber: e.detail.value }) }
           }></IonInput>
         </div>
 
-
+        <SettingsContextConsumer>
+        {(context: Settings) => (<div>
         <div>
           <IonLabel>Asset Type</IonLabel>
           <IonInput id="assetType" value={assetType} placeholder="Enter Asset Type" onIonChange={
-            e => { this.setState({ assetType: e.detail.value }) }
+            e => { this.setState({assetType: e.detail.value}) }
           }></IonInput>
         </div>
 
         <IonLabel>Company</IonLabel>
-        <IonInput id="company" value={company} placeholder="Company" onIonChange={
+        <IonInput readonly={true} id="company" value={context.company} placeholder="Company" onIonChange={
           e => { this.setState({ company: e.detail.value }) }
         }></IonInput>
-
+        </div>
+        )}
+        </SettingsContextConsumer>
         <div>
           <AssetsContextConsumer>
             {(context: Assets) => (
@@ -196,13 +195,13 @@ export class NewAssetComponent extends Component {
               }//Close onClick method
 
 
-              }>Save</IonButton>
+              } expand="block">Save</IonButton>
             )}
           </AssetsContextConsumer>
           <IonButton onClick={(e)=>{
             console.log("clear clicked");
             this.setState({... INITIAL_STATE});
-          }}>Clear</IonButton>
+          }} expand="block">Clear</IonButton>
 
         </div>
       </IonContent>

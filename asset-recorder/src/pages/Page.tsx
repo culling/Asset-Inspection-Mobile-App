@@ -7,6 +7,7 @@ import HomeContainer from '../components/home/HomeContainer';
 import NewAssetContainer from '../components/newAsset/NewAssetContainer';
 import PreviousSessionsContainer from '../components/previousSessions/PreviousSessionsContainer';
 import CurrentSessionContainer from '../components/currentSession/CurrentSessionContainer';
+import SettingsContainer from '../components/settings/SettingsContainer';
 import './Page.css';
 
 
@@ -15,7 +16,7 @@ const Page: React.FC = () => {
 
   const { name } = useParams<{ name: string; }>();
   
-  const componentsList :string[] = ["Home", "NewAsset", "Upload", "PreviousSessions", "CurrentSession"]
+  const componentsList :string[] = ["Home", "NewAsset", "Upload", "PreviousSessions", "CurrentSession", "Settings"]
 
   function getDisplayName() {
     interface IDisplayNames{
@@ -69,6 +70,9 @@ const Page: React.FC = () => {
         }
         {name === "CurrentSession" &&
           <CurrentSessionContainer name={name} />
+        }
+        {name === "Settings" && 
+          <SettingsContainer name={name}/>
         }
         {componentsList.includes(name) !== true && 
           <ExploreContainer name={name} />
