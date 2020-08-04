@@ -47,7 +47,8 @@ const UploadContainer: React.FC<ContainerProps> = ({ name }) => {
                   if(context.assets.length === 0){
                     setSuccessfulUploadToast(true);
                   }
-                });
+                })
+                .catch(e => context.assets.push(asset));
 
               }
 

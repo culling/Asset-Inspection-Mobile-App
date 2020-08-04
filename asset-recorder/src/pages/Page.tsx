@@ -5,6 +5,8 @@ import ExploreContainer from '../components/ExploreContainer';
 import UploadContainer from '../components/upload/UploadContainer';
 import HomeContainer from '../components/home/HomeContainer';
 import NewAssetContainer from '../components/newAsset/NewAssetContainer';
+import PreviousSessionsContainer from '../components/previousSessions/PreviousSessionsContainer';
+import CurrentSessionContainer from '../components/currentSession/CurrentSessionContainer';
 import './Page.css';
 
 
@@ -12,13 +14,18 @@ import './Page.css';
 const Page: React.FC = () => {
 
   const { name } = useParams<{ name: string; }>();
+  
+  const componentsList :string[] = ["Home", "NewAsset", "Upload", "PreviousSessions", "CurrentSession"]
+
   function getDisplayName() {
     interface IDisplayNames{
       [key : string] : any
     }
 
     const displayNames : IDisplayNames = {
-      "NewAsset":"New Asset"
+      "NewAsset":"New Asset",
+      "PreviousSessions": "Previous Sessions",
+      "CurrentSession": "Current Session"
     };
     
     let displayName :string = name;
@@ -57,7 +64,13 @@ const Page: React.FC = () => {
         {name === "Upload" &&
           <UploadContainer name={name} />
         }
-        {name !== "Home" && name !== "NewAsset" && name !== "Upload" &&
+        {name === "PreviousSessions" &&
+          <PreviousSessionsContainer name={name} />
+        }
+        {name === "CurrentSession" &&
+          <CurrentSessionContainer name={name} />
+        }
+        {componentsList.includes(name) !== true && 
           <ExploreContainer name={name} />
         }
 
