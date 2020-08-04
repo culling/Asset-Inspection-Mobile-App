@@ -13,14 +13,16 @@ import { useLocation } from 'react-router-dom';
 import {
   archiveOutline,
   archiveSharp,
-  bookmarkOutline,
-  bookmarkSharp,
+  saveOutline,
+  saveSharp,
   settingsOutline,
   settingsSharp,
   homeOutline,
   homeSharp,
-  cameraOutline,
-  cameraSharp
+  documentOutline,
+  documentSharp,
+  documentsOutline,
+  documentsSharp
 } from 'ionicons/icons';
 import './Menu.css';
 
@@ -41,14 +43,20 @@ const appPages: AppPage[] = [
   {
     title: 'New Asset',
     url: '/page/NewAsset',
-    iosIcon: cameraOutline,
-    mdIcon: cameraSharp
+    iosIcon: documentOutline,
+    mdIcon: documentSharp
+  },
+  {
+    title: 'Current Session',
+    url: '/page/CurrentSession',
+    iosIcon: documentsOutline,
+    mdIcon: documentsSharp
   },
   {
     title: 'Upload To Cloud',
     url: '/page/Upload',
-    iosIcon: bookmarkOutline,
-    mdIcon: bookmarkSharp
+    iosIcon: saveOutline,
+    mdIcon: saveSharp
   },
   {
     title: 'Previous Sessions',
