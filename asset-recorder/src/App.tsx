@@ -34,7 +34,7 @@ const App: React.FC = () => {
 
   return (
     <IonApp>
-      <SettingsContextProvider value={ {company: "Acme. Inc", defaultAssetType: "Computer"} as Settings}>
+      <SettingsContextProvider>
       <AssetsContextProvider value={{assets: [] as Asset[]}}>
       <IonReactRouter>
         <IonSplitPane contentId="main">

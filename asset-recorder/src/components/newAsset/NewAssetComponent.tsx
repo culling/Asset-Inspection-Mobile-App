@@ -4,7 +4,7 @@ import MapSection from '../map/Map' // import the map here
 
 import { IonContent, IonImg, IonButton, IonText, IonInput, IonLabel } from '@ionic/react';
 
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 const INITIAL_STATE = {
   map: null,
   latitude: null,
@@ -14,7 +14,8 @@ const INITIAL_STATE = {
   serialNumberPhoto: "",
   serialNumber: "",
   assetType: "",
-  company: ""
+  company: "",
+  assetTypeChanged: false
 };
 
 
@@ -89,8 +90,8 @@ export class NewAssetComponent extends Component {
 
   
   render() {
-    const { latitude, longitude, assetIdPhoto, assetId, serialNumberPhoto, serialNumber, company, assetType } = this.state;
-
+    const { latitude, longitude, assetIdPhoto, assetId, serialNumberPhoto, serialNumber, company, assetType, assetTypeChanged } = this.state;
+    // let [assetTypeChanged, setAssetTypeChanged] = useState(false);
 
 
     return (
@@ -145,8 +146,11 @@ export class NewAssetComponent extends Component {
         {(context: Settings) => (<div>
         <div>
           <IonLabel>Asset Type</IonLabel>
-          <IonInput id="assetType" value={assetType} placeholder="Enter Asset Type" onIonChange={
-            e => { this.setState({assetType: e.detail.value}) }
+          <IonInput id="assetType" value={(assetTypeChanged)? assetType : context.defaultAssetType} placeholder="Enter Asset Type" onIonChange={
+            e => { 
+              this.setState({assetTypeChanged: true})
+              this.setState({assetType: e.detail.value}) 
+            }
           }></IonInput>
         </div>
 

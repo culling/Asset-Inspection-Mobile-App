@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { SettingsContextConsumer, Settings } from '../../models/SettingsContext';
+import { SettingsContextConsumer, Settings, saveSettings } from '../../models/SettingsContext';
 import { IonLabel, IonInput, IonButton, IonContent, IonList, IonItem } from '@ionic/react';
 
 
@@ -8,38 +8,50 @@ interface ContainerProps {
 }
 
 const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
-  const [company, setCompany] = useState("");
-  // const [defaultAssetType, setDefaultAssetType] = useState("Computer");
+  // const [company, setCompany] = useState("");
+  // const [defaultAssetType, setDefaultAssetType] = useState("");
 
 
   return (
     <IonContent>
+          <SettingsContextConsumer>
+          {(context: Settings) => (<div>
       <IonList>
       
         <IonItem>
-          <IonLabel>Company</IonLabel>
-          <IonInput id="company" value={company} placeholder="Company" onIonChange={
-          e => { setCompany(e.detail.value ? e.detail.value : "") }
+          <IonLabel><strong>Company</strong></IonLabel>
+          <IonInput id="company" value={context.company} placeholder="Company" onIonChange={
+          e => { 
+            //setCompany(e.detail.value ? e.detail.value : "") 
+            context.company = e.detail.value ? e.detail.value : "";
+          }
           }></IonInput>
         </IonItem>
 
-        {/* <IonItem>
-          <IonLabel>Default Asset Type</IonLabel>
-          <IonInput id="defaultAssetType" value={defaultAssetType} placeholder="Default Asset Type" onIonChange={
-          e => { setDefaultAssetType(e.detail.value ? e.detail.value : "") }
+        <IonItem>
+          <IonLabel><strong>Default Asset Type: </strong></IonLabel>
+          <IonInput id="defaultAssetType" value={context.defaultAssetType} placeholder="Default Asset Type" onIonChange={
+          e => { 
+            // setDefaultAssetType(e.detail.value ? e.detail.value : "") 
+            context.defaultAssetType = e.detail.value ? e.detail.value : ""
+          }
           }></IonInput>
-        </IonItem> */}
+        </IonItem>
       
       </IonList>
-    <SettingsContextConsumer>
-    {(context: Settings) => (<div>
+
+
       <IonButton onClick={e=>{
-        context.company = company;
-        // context.defaultAssetType = defaultAssetType;
+        const settings = {
+          company: context.company,
+          defaultAssetType: context.defaultAssetType
+        }
+        saveSettings(settings);
       }} expand="block">Save</IonButton>
      </div> )
     }
     </SettingsContextConsumer>
+    
 
 
     </IonContent>
