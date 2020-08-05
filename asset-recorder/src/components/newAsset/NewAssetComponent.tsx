@@ -20,7 +20,7 @@ const INITIAL_STATE = {
 
 
 import { Plugins, CameraResultType } from '@capacitor/core';
-import { Assets, AssetsContextConsumer } from '../../models/AssetsContext';
+import { Assets, AssetsContextConsumer, saveAssets, Asset } from '../../models/AssetsContext';
 import { SettingsContextConsumer, Settings } from '../../models/SettingsContext';
 const { Camera } = Plugins;
 
@@ -167,34 +167,22 @@ export class NewAssetComponent extends Component {
               <IonButton onClick={e => {
                 console.log("Save Clicked");
                 console.log("assetId", assetId);
-
+                let asset = {
+                  latitude: latitude,
+                  longitude: longitude,
+                  inspection_time: Date.now().toString(),
+                  assetType: assetType,
+                  assetIdText: assetId,
+                  serialNumberText: serialNumber,
+                  serialNumberPhoto: null,
+                  company: company
+                } as Asset;
                 context.assets ?
-                  context.assets.push(
-                    {
-                      latitude: latitude,
-                      longitude: longitude,
-                      inspection_time: Date.now().toString(),
-                      assetType: assetType,
-                      assetIdText: assetId,
-                      serialNumberText: serialNumber,
-                      serialNumberPhoto: null,
-                      company: company
-                    }
-                  ) :
-                  context.assets = [
-                    {
-                      latitude: latitude,
-                      longitude: longitude,
-                      inspection_time: Date.now().toString(),
-                      assetType: assetType,
-                      assetIdText: assetId,
-                      serialNumberText: serialNumber,
-                      serialNumberPhoto: null,
-                      company: company
-                    }
-                  ];
-
+                  context.assets.push(asset) :
+                  context.assets = [asset];
+                saveAssets(context.assets as Asset[]);
                 this.setState({...INITIAL_STATE});
+                
                 console.log(context.assets);
               }//Close onClick method
 
