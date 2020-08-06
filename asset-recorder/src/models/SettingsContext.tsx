@@ -24,9 +24,6 @@ const defaultSettings = {
 } as Settings
 
 
-// let SettingsContextProvider = SettingsContext.Provider;
-
-
 let SettingsContextProvider = ( props: { children: React.ReactNode; }) => {
     const [currentSettings, setCurrentSettings] = useState(defaultSettings);
 

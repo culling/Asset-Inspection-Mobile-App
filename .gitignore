@@ -28,5 +28,5 @@ yarn-error.log*
 
 
 # secrets
-/asset-recorder/src/secrets/
-secrets/
+# /asset-recorder/src/secrets/
+# secrets/

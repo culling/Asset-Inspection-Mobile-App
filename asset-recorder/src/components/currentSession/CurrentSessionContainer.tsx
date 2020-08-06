@@ -32,8 +32,7 @@ const CurrentSessionContainer: React.FC<ContainerProps> = ({ name }) => {
         </IonList>
         <IonButton onClick={e=>{
           console.log("Delete elements");
-
-          }}>Delete</IonButton>
+          }}expand="block">Delete</IonButton>
     </IonContent>
 
   );

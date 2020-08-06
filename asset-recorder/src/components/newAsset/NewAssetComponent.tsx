@@ -20,7 +20,7 @@ const INITIAL_STATE = {
 
 
 import { Plugins, CameraResultType } from '@capacitor/core';
-import { Assets, AssetsContextConsumer, Asset } from '../../models/AssetsContext';
+import { Assets, AssetsContextConsumer, saveAssets, Asset } from '../../models/AssetsContext';
 import { SettingsContextConsumer, Settings } from '../../models/SettingsContext';
 const { Camera } = Plugins;
 
