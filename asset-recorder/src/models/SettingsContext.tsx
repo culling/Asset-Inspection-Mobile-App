@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from 'react';
 import { Plugins } from '@capacitor/core';
 
 export interface Settings {
+    serverUrl: string | number | null | undefined;
     company: string;
     defaultAssetType: string;
 }
@@ -20,11 +21,12 @@ export async function saveSettings(settings: Settings) {
 let SettingsContext = createContext({} as Settings);
 const defaultSettings = {
     company: "Acme Inc. 2",
-    defaultAssetType: "Computer"
+    defaultAssetType: "Computer",
+    serverUrl: "https://assetrecorder-postgress-1.herokuapp.com"
 } as Settings
 
 
-let SettingsContextProvider = ( props: { children: React.ReactNode; }) => {
+let SettingsContextProvider = (props: { children: React.ReactNode; }) => {
     const [currentSettings, setCurrentSettings] = useState(defaultSettings);
 
 
@@ -41,7 +43,11 @@ let SettingsContextProvider = ( props: { children: React.ReactNode; }) => {
 
     return (
         <SettingsContext.Provider
-            value={{ company: currentSettings.company, defaultAssetType : currentSettings.defaultAssetType }}
+            value={{
+                company: currentSettings.company,
+                defaultAssetType: currentSettings.defaultAssetType,
+                serverUrl: currentSettings.serverUrl
+            }}
         >{props.children}</SettingsContext.Provider>
     )
 }
