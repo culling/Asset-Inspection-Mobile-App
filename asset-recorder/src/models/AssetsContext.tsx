@@ -7,9 +7,11 @@ export interface Asset {
     inspection_time : string;
     assetType?: string;
     assetIdText: string;
-    assetIdNewAsset?: any;
+    assetIdPhoto?: any;
+    assetIdPhotoUrl?: any;
     serialNumberText: string;
     serialNumberPhoto?: any;
+    serialNumberPhotoUrl?: string;
     company?: string;
 }
 
