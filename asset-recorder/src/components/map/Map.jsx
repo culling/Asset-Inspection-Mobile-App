@@ -5,7 +5,7 @@
 import React from 'react'
 import GoogleMapReact from 'google-map-react'
 import './map.css'
-import googleMapsSecret from './../../secrets/googleMaps';
+import googleMapsSecret from '../../secrets/googleMaps';
 
 import { Icon } from '@iconify/react'
 import locationIcon from '@iconify/icons-mdi/map-marker'
