@@ -10,6 +10,7 @@ import CurrentSessionContainer from '../components/currentSession/CurrentSession
 import SettingsContainer from '../components/settings/SettingsContainer';
 import './Page.css';
 import { SettingsContextConsumer, Settings } from '../models/SettingsContext';
+import { AssetsContextConsumer, Assets } from '../models/AssetsContext';
 
 
 
@@ -51,7 +52,7 @@ const Page: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <SettingsContextConsumer>
-        {(context: Settings) => (
+        {(settings: Settings) => (
           <IonContent>
             <IonHeader collapse="condense">
               <IonToolbar>
@@ -66,13 +67,20 @@ const Page: React.FC = () => {
               <NewAssetContainer />
             }
             {name === "Upload" &&
-              <UploadContainer name={name} settings={context} />
+              <UploadContainer name={name} settings={settings} />
             }
             {name === "PreviousSessions" &&
-              <PreviousSessionsContainer name={name} settings={context} />
+              <PreviousSessionsContainer name={name} settings={settings} />
             }
             {name === "CurrentSession" &&
-              <CurrentSessionContainer name={name} />
+              // <div>
+                // test
+                <AssetsContextConsumer>
+                  {(assetsContext: Assets) => (
+                    <CurrentSessionContainer name={name} assets={assetsContext.assets} />
+                  )}
+                </AssetsContextConsumer>
+              // </div>
             }
             {name === "Settings" &&
               <SettingsContainer name={name} />
