@@ -14,10 +14,9 @@ interface ContainerProps {
 
 const PreviousSessionsContainer: React.FC<ContainerProps> = ({ name, settings }) => {
   const [previousAssets, setPreviousAssets] = useState([]);
-
-  
   const [successfulDownloadToast, setSuccessfulDownloadToast] = useState(false);
-  const [noUnsyncedAssetsToast, setNoUnsyncedAssetsToast] = useState(false);
+  const [noRemoteAssetsToast, setNoRemoteAssetsToast] = useState(false);
+  const [loadingAssetsToast, setLoadingAssetsToast] = useState(true);
 
   let isRendered = useRef(false);
 
@@ -29,9 +28,13 @@ const PreviousSessionsContainer: React.FC<ContainerProps> = ({ name, settings })
         if (!isRendered.current){
           console.log(res.data);
           setPreviousAssets(res.data);
-
         }
-        setSuccessfulDownloadToast(true);
+        if(res.data && res.data.length === 0 ){
+          setNoRemoteAssetsToast(true);
+        }else{
+          setSuccessfulDownloadToast(true);
+        }
+
     });
   }
 
@@ -60,15 +63,22 @@ const PreviousSessionsContainer: React.FC<ContainerProps> = ({ name, settings })
       </IonList>
 
       <IonToast
+        isOpen={loadingAssetsToast}
+        onDidDismiss={() => setLoadingAssetsToast(false)}
+        message="Fetching inspections has been downloaded."
+        duration={5000}
+      />
+
+      <IonToast
         isOpen={successfulDownloadToast}
         onDidDismiss={() => setSuccessfulDownloadToast(false)}
-        message="Remote asset inventory has been downloaded."
+        message="Remote asset inspections has been downloaded."
         duration={5000}
       />
       <IonToast
-        isOpen={noUnsyncedAssetsToast}
-        onDidDismiss={() => setNoUnsyncedAssetsToast(false)}
-        message="Local asset inventory has been uploaded and cleared."
+        isOpen={noRemoteAssetsToast}
+        onDidDismiss={() => setNoRemoteAssetsToast(false)}
+        message="There are no remote asset inspections."
         duration={5000}
       />
 
