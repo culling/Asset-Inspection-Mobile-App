@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../Default.css';
 import { IonList, IonContent, IonToast } from '@ionic/react';
 import AssetListItem from '../assetListItem/AssetListItem';
@@ -6,6 +6,7 @@ import axios from 'axios';
 
 import ServerConverter from "./../../models/ServerConverter";
 import { Settings } from 'http2';
+import { getPreviousAssets } from '../../models/AssetsContext';
 
 interface ContainerProps {
   name: string;
@@ -20,35 +21,22 @@ const PreviousSessionsContainer: React.FC<ContainerProps> = ({ name, settings })
 
   let isRendered = useRef(false);
 
-  
-  const getPreviousAssets = (server: string) =>{
-    console.log("previousAssets.map: ", previousAssets.map);
-    const url= `${server}/assets`;
-    axios.get(url).then((res) => {
-        if (!isRendered.current){
-          console.log(res.data);
-          setPreviousAssets(res.data);
-        }
-        if(res.data && res.data.length === 0 ){
-          setNoRemoteAssetsToast(true);
-        }else{
-          setSuccessfulDownloadToast(true);
-        }
-
-    });
-  }
-
-
   useEffect(() => {
-
-    console.log("settings: " , settings);
-    getPreviousAssets(settings.serverUrl);
+    console.log("settings: ", settings);
+    getPreviousAssets(settings.serverUrl).then((previousAssets) => {
+      if (previousAssets && previousAssets.length === 0) {
+        setNoRemoteAssetsToast(true);
+      } else {
+        setPreviousAssets(previousAssets);
+        setSuccessfulDownloadToast(true);
+      }
+    });
     return () => {
       isRendered.current = true;
     };
   }, []);
 
-  function convertFromServer(serverJson : any){
+  function convertFromServer(serverJson: any) {
     let serverConverter = new ServerConverter();
     return serverConverter.convert(serverJson);
   }
@@ -58,7 +46,7 @@ const PreviousSessionsContainer: React.FC<ContainerProps> = ({ name, settings })
       <IonList inset={true}>
         {Array.isArray(previousAssets) && previousAssets.map((previousAsset) => {
           return convertFromServer(previousAsset);
-        }).map( (previousAsset, i) => <AssetListItem asset={previousAsset} key={i} deletable={false}/>
+        }).map((previousAsset, i) => <AssetListItem asset={previousAsset} key={i} deletable={false} onSelectedFunction={() => { }} />
         )}
       </IonList>
 

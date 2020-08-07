@@ -1,10 +1,12 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { Plugins } from '@capacitor/core';
+import axios from 'axios';
+
 
 export interface Asset {
     latitude: string;
     longitude: string;
-    inspection_time : string;
+    inspection_time: string;
     assetType?: string;
     assetIdText: string;
     assetIdPhoto?: any;
@@ -16,12 +18,30 @@ export interface Asset {
 }
 
 export interface Assets {
-    assets : Asset[];
+    assets: Asset[];
 }
 
 const initalAssets = [] as Asset[];
 
 const { Storage } = Plugins;
+
+export async function getPreviousAssets(server: string) {
+    // console.log("previousAssets.map: ", previousAssets.map);
+    const url = `${server}/assets`;
+    return await axios.get(url).then((res: any) => {
+        // if (!isRendered.current){
+        //   console.log(res.data);
+        return (res.data);
+        // }
+        // if(res.data && res.data.length === 0 ){
+        //   setNoRemoteAssetsToast(true);
+        // }else{
+        //   setSuccessfulDownloadToast(true);
+        // }
+
+    });
+}
+
 
 export async function saveAssets(assets: Asset[]) {
     await Storage.set({
@@ -30,15 +50,14 @@ export async function saveAssets(assets: Asset[]) {
     });
 }
 
-
 export async function loadAssets() {
 
     Promise.resolve(Storage.get({ key: 'assets' }).then(
         (result) => {
             if (typeof result.value === 'string') {
-                return(JSON.parse(result.value) as Asset[]);
+                return (JSON.parse(result.value) as Asset[]);
             }
-            else{
+            else {
                 return initalAssets;
             }
         },
@@ -52,8 +71,8 @@ let AssetsContext = createContext({} as Assets);
 
 // let AssetsContextProvider = AssetsContext.Provider;
 
-let AssetsContextProvider = ( props: { children: React.ReactNode; }) => {
-    const [assets, setAssets] = useState( initalAssets );
+let AssetsContextProvider = (props: { children: React.ReactNode; }) => {
+    const [assets, setAssets] = useState(initalAssets);
 
     useEffect(() => {
         Promise.resolve(Storage.get({ key: 'assets' }).then(
@@ -68,7 +87,7 @@ let AssetsContextProvider = ( props: { children: React.ReactNode; }) => {
 
     return (
         <AssetsContext.Provider
-            value={{assets: assets}}
+            value={{ assets: assets }}
         >{props.children}</AssetsContext.Provider>
     )
 }
