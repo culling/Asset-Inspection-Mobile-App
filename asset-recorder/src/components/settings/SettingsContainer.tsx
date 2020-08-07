@@ -50,11 +50,14 @@ const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
 
 
             {/* <IonItem> */}
-              <IonButton onClick={e => {
-                console.log("Remove all items");
-                fetch(`${context}/db/drop`);
+            <IonButton onClick={e => {
+              console.log("Remove all items");
+              fetch(`${context.serverUrl}/db/drop`)
+                .then(res => { return res.json() })
+                .then(json => console.log(json))
+                .catch(err => console.log(`An error occoured: ${err}`));
 
-              }} expand="block">Drop and recreate Asset Database</IonButton>
+            }} expand="block">Drop and recreate Asset Database</IonButton>
 
             {/* </IonItem> */}
 

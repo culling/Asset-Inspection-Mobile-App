@@ -5,12 +5,14 @@ import AssetListItem from '../assetListItem/AssetListItem';
 import axios from 'axios';
 
 import ServerConverter from "./../../models/ServerConverter";
+import { Settings } from 'http2';
 
 interface ContainerProps {
   name: string;
+  settings: any;
 }
 
-const PreviousSessionsContainer: React.FC<ContainerProps> = ({ name }) => {
+const PreviousSessionsContainer: React.FC<ContainerProps> = ({ name, settings }) => {
   const [previousAssets, setPreviousAssets] = useState([]);
 
   
@@ -35,7 +37,9 @@ const PreviousSessionsContainer: React.FC<ContainerProps> = ({ name }) => {
 
 
   useEffect(() => {
-    getPreviousAssets("https://assetrecorder-postgress-1.herokuapp.com");
+
+    console.log("settings: " , settings);
+    getPreviousAssets(settings.serverUrl);
     return () => {
       isRendered.current = true;
     };

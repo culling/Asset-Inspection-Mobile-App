@@ -8,6 +8,7 @@ import { Assets, AssetsContextConsumer } from '../../models/AssetsContext';
 
 interface ContainerProps {
   name: string;
+  settings: any;
 }
 
 // let saveAll = () => {
@@ -21,7 +22,7 @@ interface ContainerProps {
 //   // }
 // }
 
-const UploadContainer: React.FC<ContainerProps> = ({ name }) => {
+const UploadContainer: React.FC<ContainerProps> = ({ name, settings }) => {
   const [successfulUploadToast, setSuccessfulUploadToast] = useState(false);
   const [noUnsyncedAssetsToast, setNoUnsyncedAssetsToast] = useState(false);
   return (
@@ -41,7 +42,7 @@ const UploadContainer: React.FC<ContainerProps> = ({ name }) => {
                 return;
               }
               console.log("Asset:", asset);
-              axios.post('https://assetrecorder-postgress-1.herokuapp.com/assets', asset)
+              axios.post(`${settings.serverUrl}/assets`, asset)
                 .then(response => {
                   console.log("Response: " + JSON.stringify(response));
                   if(context.assets.length === 0){
