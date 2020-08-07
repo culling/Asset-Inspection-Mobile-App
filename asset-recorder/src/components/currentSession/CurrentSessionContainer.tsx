@@ -17,7 +17,9 @@ const CurrentSessionContainer: React.FC<ContainerProps> = ({ name, assets }) => 
         {(assets.length > 0) ?
           <IonList>
             {assets.map((asset: Asset, i: any) => {
-              return <AssetListItem key={i} asset={asset} deletable={true} />
+              return <AssetListItem key={i} asset={asset} deletable={true} onSelectedFunction={
+                (selectedAsset: Asset) => { console.log(selectedAsset) }
+              } />
             })}
           </IonList> :
           <h2>There are no current Asset Inspections waiting to be saved</h2>}

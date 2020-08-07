@@ -8,33 +8,26 @@ import { filter } from 'ionicons/icons';
 interface ContainerProps {
     asset: any;
     deletable: boolean;
+    onSelectedFunction: any; 
 }
 
 
-const AssetListItem: React.FC<ContainerProps> = ({ asset, deletable }) => {
+const AssetListItem: React.FC<ContainerProps> = ({ asset, deletable, onSelectedFunction }) => {
     return (
 
         <IonItem>
             <IonLabel>{asset.assetIdText}</IonLabel>
             <p>{asset.serialNumberText}</p>
 
-                <AssetsContextConsumer>
-                    {(context: Assets) => (
-                        <div>
-                            {console.log("Context: ", context)}
-                            {context.assets && context.assets.includes(asset) && deletable &&
-                                <IonCheckbox slot="start" onClick={e => {
-                                    console.log("asset: ", asset);
-                                    console.log("assets: ", context.assets);
+            <div>
+                {deletable &&
+                    <IonCheckbox slot="start" onClick={e => {
+                        console.log("asset: ", asset);
+                        onSelectedFunction(asset);
+                    }} />
+                }
+            </div>
 
-                                    const filteredAssets = context.assets.filter(unfilteredAsset => unfilteredAsset === asset);
-                                    context.assets = filteredAssets;
-                                    
-                                }} />
-                            }
-                        </div>
-                    )}
-                </AssetsContextConsumer>
 
         </IonItem>
 
