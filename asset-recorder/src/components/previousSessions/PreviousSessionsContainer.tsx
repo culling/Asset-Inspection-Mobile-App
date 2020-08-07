@@ -65,14 +65,14 @@ const PreviousSessionsContainer: React.FC<ContainerProps> = ({ name, settings })
       <IonToast
         isOpen={loadingAssetsToast}
         onDidDismiss={() => setLoadingAssetsToast(false)}
-        message="Fetching inspections has been downloaded."
+        message="Fetching inspections from remote server."
         duration={5000}
       />
 
       <IonToast
         isOpen={successfulDownloadToast}
         onDidDismiss={() => setSuccessfulDownloadToast(false)}
-        message="Remote asset inspections has been downloaded."
+        message="Asset inspections have been downloaded."
         duration={5000}
       />
       <IonToast

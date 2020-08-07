@@ -1,5 +1,6 @@
 import React from 'react';
 import './../Default.css';
+import IntroductionContainer from './IntroductionContainer';
 
 interface ContainerProps {
   name: string;
@@ -8,8 +9,9 @@ interface ContainerProps {
 const HomeContainer: React.FC<ContainerProps> = ({ name }) => {
   return (
     <div className="container">
-      <strong>{name}</strong>
-      <p>Welcome!</p>
+      {/* <strong>{name}</strong> */}
+      {/* <p>Welcome!</p> */}
+      <IntroductionContainer name={name} />
     </div>
   );
 };

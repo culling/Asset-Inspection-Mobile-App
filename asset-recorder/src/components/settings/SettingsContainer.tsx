@@ -8,8 +8,6 @@ interface ContainerProps {
 }
 
 const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
-  // const [company, setCompany] = useState("");
-  // const [defaultAssetType, setDefaultAssetType] = useState("");
   const [serverSettingsOpen, setServerSettingsOpen] = useState(false);
 
   return (
@@ -22,7 +20,6 @@ const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
               <IonLabel><strong>Company</strong></IonLabel>
               <IonInput id="company" value={context.company} placeholder="Company" onIonChange={
                 e => {
-                  //setCompany(e.detail.value ? e.detail.value : "") 
                   context.company = e.detail.value ? e.detail.value : "";
                 }
               }></IonInput>
@@ -32,8 +29,7 @@ const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
               <IonLabel><strong>Default Asset Type: </strong></IonLabel>
               <IonInput id="defaultAssetType" value={context.defaultAssetType} placeholder="Default Asset Type" onIonChange={
                 e => {
-                  // setDefaultAssetType(e.detail.value ? e.detail.value : "") 
-                  context.defaultAssetType = e.detail.value ? e.detail.value : ""
+                  context.defaultAssetType = e.detail.value ? e.detail.value : "";
                 }
               }></IonInput>
             </IonItem>
@@ -49,7 +45,6 @@ const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
               <IonLabel><strong>Server Url: </strong></IonLabel>
               <IonInput id="defaultAssetType" value={context.serverUrl} placeholder="https://assetrecorder-postgress-1.herokuapp.com" onIonChange={
                 e => {
-                  // setDefaultAssetType(e.detail.value ? e.detail.value : "") 
                   context.serverUrl = e.detail.value ? e.detail.value : ""
                 }
               }></IonInput>

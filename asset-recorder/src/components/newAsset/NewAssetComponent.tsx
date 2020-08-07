@@ -9,8 +9,12 @@ const INITIAL_STATE = {
   map: null,
   latitude: null,
   longitude: null,
+  showAssetIdPhoto: true,
+  assetIdPhotoUrl: "",
   assetIdPhoto: "",
   assetId: "",
+  showSerialNumberPhoto: true,
+  serialNumberPhotoUrl: "",
   serialNumberPhoto: "",
   serialNumber: "",
   assetType: "",
@@ -20,7 +24,7 @@ const INITIAL_STATE = {
 
 
 import { Plugins, CameraResultType } from '@capacitor/core';
-import { Assets, AssetsContextConsumer, saveAssets, Asset } from '../../models/AssetsContext';
+import { Assets, AssetsContextConsumer, Asset } from '../../models/AssetsContext';
 import { SettingsContextConsumer, Settings } from '../../models/SettingsContext';
 const { Camera } = Plugins;
 
@@ -30,10 +34,6 @@ const { Camera } = Plugins;
 
 export class NewAssetComponent extends Component {
   state: any = { ...INITIAL_STATE };
-  // constructor(props: any) {
-  //   super(props);
-  //   this.state = { ...INITIAL_STATE };
-  // }
 
   async getGps() {
     // const supported = 'mediaDevices' in navigator;
@@ -71,7 +71,7 @@ export class NewAssetComponent extends Component {
     var imageUrl = image.webPath;
     // Can be set to the src of an image now
     this.setState({
-      assetIdPhoto: imageUrl
+      assetIdPhotoUrl: imageUrl
     })
   }
 
@@ -84,13 +84,24 @@ export class NewAssetComponent extends Component {
     var imageUrl = image.webPath;
     // Can be set to the src of an image now
     this.setState({
-      serialNumberPhoto: imageUrl
+      serialNumberPhotoUrl: imageUrl
     })
   }
 
 
   render() {
-    const { latitude, longitude, assetIdPhoto: assetIdPhotoUrl, assetId, serialNumberPhoto: serialNumberPhotoUrl, serialNumber, company, assetType, assetTypeChanged } = this.state;
+    const { latitude,
+      longitude,
+      assetIdPhotoUrl,
+      assetId,
+      serialNumberPhotoUrl,
+      serialNumber,
+      company,
+      assetType,
+      assetTypeChanged,
+      showAssetIdPhoto,
+      showSerialNumberPhoto
+    } = this.state;
     // let [assetTypeChanged, setAssetTypeChanged] = useState(false);
 
 
@@ -110,28 +121,56 @@ export class NewAssetComponent extends Component {
         </div>
         <IonButton color="primary" onClick={() => this.getGps()} expand="block">
           Update Location
-          </IonButton>
+        </IonButton>
 
-        <div>
-          {(assetIdPhotoUrl !== '') &&
+        <div className="assetIdPhotoContainer">
+          {(assetIdPhotoUrl !== '') && showAssetIdPhoto &&
             <IonImg style={{ 'border': '1px solid black', 'minHeight': '100px' }} src={assetIdPhotoUrl} ></IonImg>
           }
-          <IonButton color="primary" onClick={() => this.takeAssetIdPicture()} expand="block">
-            {(assetIdPhotoUrl !== null) ?
+          {(assetIdPhotoUrl !== '') &&
+            <IonButton onClick={
+              e => this.setState({ showAssetIdPhoto: !showAssetIdPhoto })
+            } expand="block">
+              {showAssetIdPhoto ?
+                <span>Hide Asset Id Photo</span> :
+                <span>Show Asset Id Photo</span>}
+            </IonButton>
+          }
+
+          <IonButton color="primary" onClick={() => {
+            this.takeAssetIdPicture();
+            this.setState({ showAssetIdPhoto: true });
+          }} expand="block">
+            {(assetIdPhotoUrl == '') ?
               <span>Take Photo of assetID</span> :
               <span>Update Photo of assetID </span>}
           </IonButton>
+
         </div>
 
-        <div>
-          {(serialNumberPhotoUrl !== '') &&
+        <div className="serialNumberPhotoContainer">
+          {(serialNumberPhotoUrl !== '') && (showSerialNumberPhoto) &&
             <IonImg style={{ 'border': '1px solid black', 'minHeight': '100px' }} src={serialNumberPhotoUrl} ></IonImg>
           }
-          <IonButton color="primary" onClick={() => this.takeSerialNumberPicture()} expand="block">
-            {(serialNumberPhotoUrl !== null) ?
+          {(serialNumberPhotoUrl !== '') &&
+            <IonButton onClick={
+              e => this.setState({ showSerialNumberPhoto: !showSerialNumberPhoto })
+            } expand="block">
+              {showSerialNumberPhoto ?
+                <span>Hide Serial Number Photo</span> :
+                <span>Show Serial Number Photo</span>}
+            </IonButton>
+          }
+          <IonButton color="primary" onClick={() => {
+            this.takeSerialNumberPicture();
+            this.setState({ showSerialNumberPhoto: true });
+          }} expand="block">
+            {(serialNumberPhotoUrl === '') ?
               <span>Take Photo of serial number</span> :
               <span>Update Photo of serial number</span>}
           </IonButton>
+
+
         </div>
 
         <div>
