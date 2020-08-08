@@ -3,7 +3,8 @@ import './../Default.css';
 
 import { IonButton,  IonToast } from '@ionic/react';
 import axios from 'axios';
-import { Assets, AssetsContextConsumer } from '../../models/AssetsContext';
+import { Assets, AssetsContextConsumer, saveAssets } from '../../models/AssetsContext';
+import UploadInformationContainer from './UploadInformationContainer';
 
 
 interface ContainerProps {
@@ -17,6 +18,7 @@ const UploadContainer: React.FC<ContainerProps> = ({ name, settings }) => {
   const [noUnsyncedAssetsToast, setNoUnsyncedAssetsToast] = useState(false);
   return (
     <div className="container">
+      <UploadInformationContainer />
       <AssetsContextConsumer>
         {(context: Assets) => (
           <div>
@@ -38,11 +40,10 @@ const UploadContainer: React.FC<ContainerProps> = ({ name, settings }) => {
                   if(context.assets.length === 0){
                     setSuccessfulUploadToast(true);
                   }
+                  saveAssets(context.assets);
                 })
                 .catch(e => context.assets.push(asset));
-
               }
-
           }
           }>Save to Cloud
           </IonButton>

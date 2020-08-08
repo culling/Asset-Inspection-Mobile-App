@@ -1,6 +1,8 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { Plugins } from '@capacitor/core';
 import axios from 'axios';
+import { resolve } from 'dns';
+import { rejects } from 'assert';
 
 
 export interface Asset {
@@ -40,20 +42,19 @@ export async function saveAssets(assets: Asset[]) {
     });
 }
 
-export async function loadAssets() {
+// export function loadAssets() {
+//     let assets: Asset[] = [];
+//     Promise.resolve(Storage.get({ key: 'assets' }).then(
+//         (result) => {
+//             if (typeof result.value === 'string') {
+//                 assets = (JSON.parse(result.value) as Asset[]);
+//             }
+//         },
+//         (reason) => console.log("Failed to load settings from storage because of: " + reason)
+//     ));
 
-    Promise.resolve(Storage.get({ key: 'assets' }).then(
-        (result) => {
-            if (typeof result.value === 'string') {
-                return (JSON.parse(result.value) as Asset[]);
-            }
-            else {
-                return initalAssets;
-            }
-        },
-        (reason) => console.log("Failed to load settings from storage because of: " + reason)
-    ));
-}
+//     return assets;
+// }
 
 
 
