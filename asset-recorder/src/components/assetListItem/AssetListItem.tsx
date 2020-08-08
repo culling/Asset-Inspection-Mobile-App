@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../Default.css';
 import { IonLabel, IonItem, IonCheckbox } from '@ionic/react';
 import { AssetsContextConsumer, Assets, AssetsContextProvider } from '../../models/AssetsContext';
@@ -6,31 +6,19 @@ import { filter } from 'ionicons/icons';
 
 
 interface ContainerProps {
+    children?:React.ReactNode;
     asset: any;
-    deletable: boolean;
-    onSelectedFunction: any; 
 }
 
-
-const AssetListItem: React.FC<ContainerProps> = ({ asset, deletable, onSelectedFunction }) => {
+const AssetListItem: React.FC<ContainerProps> = (
+    props: { children?: React.ReactNode,
+    asset: any }) => {
     return (
-
         <IonItem>
-            <IonLabel>{asset.assetIdText}</IonLabel>
-            <p>{asset.serialNumberText}</p>
-
-            <div>
-                {deletable &&
-                    <IonCheckbox slot="start" onClick={e => {
-                        console.log("asset: ", asset);
-                        onSelectedFunction(asset);
-                    }} />
-                }
-            </div>
-
-
+            {props.children}
+            <IonLabel>{props.asset.assetIdText}</IonLabel>
+            <p>{props.asset.serialNumberText}</p>
         </IonItem>
-
     )
 }
 

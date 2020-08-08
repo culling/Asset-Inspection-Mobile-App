@@ -77,7 +77,7 @@ const Page: React.FC = () => {
                 // test
                 <AssetsContextConsumer>
                   {(assetsContext: Assets) => (
-                    <CurrentSessionContainer name={name} assets={assetsContext.assets} />
+                    <CurrentSessionContainer name={name} assetsProps={assetsContext.assets} />
                   )}
                 </AssetsContextConsumer>
               // </div>

@@ -46,7 +46,10 @@ const PreviousSessionsContainer: React.FC<ContainerProps> = ({ name, settings })
       <IonList inset={true}>
         {Array.isArray(previousAssets) && previousAssets.map((previousAsset) => {
           return convertFromServer(previousAsset);
-        }).map((previousAsset, i) => <AssetListItem asset={previousAsset} key={i} deletable={false} onSelectedFunction={() => { }} />
+        }).map((previousAsset, i) => <AssetListItem
+          key={i}
+          asset={previousAsset}
+          />
         )}
       </IonList>
 

@@ -26,19 +26,9 @@ const initalAssets = [] as Asset[];
 const { Storage } = Plugins;
 
 export async function getPreviousAssets(server: string) {
-    // console.log("previousAssets.map: ", previousAssets.map);
     const url = `${server}/assets`;
     return await axios.get(url).then((res: any) => {
-        // if (!isRendered.current){
-        //   console.log(res.data);
         return (res.data);
-        // }
-        // if(res.data && res.data.length === 0 ){
-        //   setNoRemoteAssetsToast(true);
-        // }else{
-        //   setSuccessfulDownloadToast(true);
-        // }
-
     });
 }
 
@@ -69,8 +59,6 @@ export async function loadAssets() {
 
 let AssetsContext = createContext({} as Assets);
 
-// let AssetsContextProvider = AssetsContext.Provider;
-
 let AssetsContextProvider = (props: { children: React.ReactNode; }) => {
     const [assets, setAssets] = useState(initalAssets);
 
@@ -86,9 +74,9 @@ let AssetsContextProvider = (props: { children: React.ReactNode; }) => {
     }, []); // Nifty trick with useEffect from: https://css-tricks.com/run-useeffect-only-once/
 
     return (
-        <AssetsContext.Provider
-            value={{ assets: assets }}
-        >{props.children}</AssetsContext.Provider>
+        <AssetsContext.Provider value={{ assets: assets }}>
+            {props.children}
+        </AssetsContext.Provider>
     )
 }
 
