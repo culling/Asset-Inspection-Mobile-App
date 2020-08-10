@@ -123,7 +123,7 @@ export class NewAssetComponent extends Component {
           Update Location
         </IonButton>
 
-        <div className="assetIdPhotoContainer">
+        <div className={assetIdPhotoUrl == '' ?  "serialNumberPhotoContainer": "serialNumberPhotoContainer photoContainer" }>
           {(assetIdPhotoUrl !== '') && showAssetIdPhoto &&
             <IonImg style={{ 'border': '1px solid black', 'minHeight': '100px' }} src={assetIdPhotoUrl} ></IonImg>
           }
@@ -148,7 +148,7 @@ export class NewAssetComponent extends Component {
 
         </div>
 
-        <div className="serialNumberPhotoContainer">
+        <div className={serialNumberPhotoUrl == '' ? "serialNumberPhotoContainer" : "serialNumberPhotoContainer photoContainer" }>
           {(serialNumberPhotoUrl !== '') && (showSerialNumberPhoto) &&
             <IonImg style={{ 'border': '1px solid black', 'minHeight': '100px' }} src={serialNumberPhotoUrl} ></IonImg>
           }

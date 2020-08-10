@@ -30,3 +30,9 @@
   overflow: hidden;
   transition: max-height 0.2s ease-out;
 }
+
+.photoContainer{ 
+  border-width: 2px;
+  border-style: solid;
+  border-color: #8c8c8c;
+}
