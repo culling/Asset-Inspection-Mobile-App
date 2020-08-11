@@ -52,14 +52,14 @@ function ItemsContextProvider(props: { children: React.ReactNode; }) {
     useEffect(() => {
         console.log("useEffect: Triggered");
         Promise.resolve(Storage.get({key: 'items'}).then(
-            (result) => {
+            (result: any) => {
                 console.log("Result: :", result);
                 if (typeof result.value === 'string') {
                     // console.log(JSON.parse(result.value));
                     setInitialItems(JSON.parse(result.value) as Item[]);
                 }
             },
-            (reason) => console.log("Failed to load Items from storage because of: " + reason)
+            (reason: any) => console.log("Failed to load Items from storage because of: " + reason)
         ));
     }, []); // Nifty trick with useEffect from: https://css-tricks.com/run-useeffect-only-once/
 

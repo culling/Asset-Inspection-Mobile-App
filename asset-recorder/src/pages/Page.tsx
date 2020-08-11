@@ -59,32 +59,35 @@ const Page: React.FC = () => {
                 <IonTitle size="large">{name}</IonTitle>
               </IonToolbar>
             </IonHeader>
-            {/* <ExploreContainer name={name} /> */}
+
             {name === "Home" &&
               <HomeContainer name={name} />
             }
+
             {name === "NewAsset" &&
               <NewAssetContainer />
             }
+
             {name === "Upload" &&
               <UploadContainer name={name} settings={settings} />
             }
+
             {name === "PreviousSessions" &&
               <PreviousSessionsContainer name={name} settings={settings} />
             }
+
             {name === "CurrentSession" &&
-              // <div>
-                // test
-                <AssetsContextConsumer>
-                  {(assetsContext: Assets) => (
-                    <CurrentSessionContainer name={name} assetsProps={assetsContext.assets} />
-                  )}
-                </AssetsContextConsumer>
-              // </div>
+              <AssetsContextConsumer>
+                {(assetsContext: Assets) => (
+                  <CurrentSessionContainer name={name} assetsProps={assetsContext.assets} />
+                )}
+              </AssetsContextConsumer>
             }
+
             {name === "Settings" &&
               <SettingsContainer name={name} />
             }
+
             {componentsList.includes(name) !== true &&
               <ExploreContainer name={name} />
             }

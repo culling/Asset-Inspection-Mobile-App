@@ -37,29 +37,30 @@ const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
 
             <IonButton onClick={e => {
               setServerSettingsOpen(!serverSettingsOpen)
-            }} expand="block" color={serverSettingsOpen?"medium":"warning"}>{serverSettingsOpen? <span>Hide Server Settings</span> : <span>Show Server Settings</span>}</IonButton>
+            }} expand="block" color={serverSettingsOpen ? "medium" : "warning"}>{serverSettingsOpen ? <span>Hide Server Settings</span> : <span>Show Server Settings</span>}</IonButton>
 
-            {serverSettingsOpen && 
-            <div className="content">
-            <IonItem>
-              <IonLabel><strong>Server Url: </strong></IonLabel>
-              <IonInput id="defaultAssetType" value={context.serverUrl} placeholder="https://assetrecorder-postgress-1.herokuapp.com" onIonChange={
-                e => {
-                  context.serverUrl = e.detail.value ? e.detail.value : ""
-                }
-              }></IonInput>
-            </IonItem>
+            {serverSettingsOpen &&
+              <div className="content">
+                <IonItem>
+                  <IonLabel><strong>Server Url: </strong></IonLabel>
+                  <IonInput id="defaultAssetType" value={context.serverUrl} placeholder="https://assetrecorder-postgress-1.herokuapp.com"
+                    onIonChange={
+                      e => {
+                        context.serverUrl = e.detail.value ? e.detail.value : ""
+                      }
+                    }></IonInput>
+                </IonItem>
 
-            <IonButton onClick={e => {
-              console.log("Remove all items");
-              fetch(`${context.serverUrl}/db/drop`)
-                .then(res => { return res.json() })
-                .then(json => console.log(json))
-                .catch(err => console.log(`An error occoured: ${err}`));
+                <IonButton onClick={e => {
+                  console.log("Remove all items");
+                  fetch(`${context.serverUrl}/db/drop`)
+                    .then(res => { return res.json() })
+                    .then(json => console.log(json))
+                    .catch(err => console.log(`An error occoured: ${err}`));
 
-            }} expand="block" color="danger">Drop and recreate Asset Database</IonButton>
-            </div>
-          }
+                }} expand="block" color="danger">Drop and recreate Asset Database</IonButton>
+              </div>
+            }
 
 
           </IonList>

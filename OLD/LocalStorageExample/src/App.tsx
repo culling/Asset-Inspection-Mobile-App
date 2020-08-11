@@ -27,12 +27,12 @@ import { ItemsContextProvider } from './models/ItemContext';
 const App: React.FC = () => (
   <IonApp>
     <ItemsContextProvider>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route path="/home" component={Home} exact={true} />
-        <Route exact path="/" render={() => <Redirect to="/home" />} />
-      </IonRouterOutlet>
-    </IonReactRouter>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <Route path="/home" component={Home} exact={true} />
+          <Route exact path="/" render={() => <Redirect to="/home" />} />
+        </IonRouterOutlet>
+      </IonReactRouter>
     </ItemsContextProvider>
   </IonApp>
 );
