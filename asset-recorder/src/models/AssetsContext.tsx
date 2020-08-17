@@ -42,22 +42,6 @@ export async function saveAssets(assets: Asset[]) {
     });
 }
 
-// export function loadAssets() {
-//     let assets: Asset[] = [];
-//     Promise.resolve(Storage.get({ key: 'assets' }).then(
-//         (result) => {
-//             if (typeof result.value === 'string') {
-//                 assets = (JSON.parse(result.value) as Asset[]);
-//             }
-//         },
-//         (reason) => console.log("Failed to load settings from storage because of: " + reason)
-//     ));
-
-//     return assets;
-// }
-
-
-
 let AssetsContext = createContext({} as Assets);
 
 let AssetsContextProvider = (props: { children: React.ReactNode; }) => {
