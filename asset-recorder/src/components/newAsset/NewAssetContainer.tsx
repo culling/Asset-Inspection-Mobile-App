@@ -1,14 +1,15 @@
 import React from 'react';
 import './../Default.css';
 
-import {NewAssetComponent} from "./NewAssetComponent";
+import NewAssetComponent from "./NewAssetComponent";
 
 interface ContainerProps {
+  settings: any;
 }
 
-const NewAssetContainer: React.FC<ContainerProps> = ({}) => {
+const NewAssetContainer: React.FC<ContainerProps> = ({settings}) => {
   return (
-        <NewAssetComponent />
+        <NewAssetComponent settings={settings} />
   );
 };
 

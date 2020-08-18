@@ -65,7 +65,7 @@ const Page: React.FC = () => {
             }
 
             {name === "NewAsset" &&
-              <NewAssetContainer />
+              <NewAssetContainer settings={settings} />
             }
 
             {name === "Upload" &&

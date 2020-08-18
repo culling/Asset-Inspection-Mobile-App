@@ -50,16 +50,18 @@ export async function uploadToCloud(assets: Asset[], settings: Settings, callbac
             return;
         }
         console.log("Asset to be loaded to cloud:", asset);
-        axios.post(`${settings.serverUrl}/assets`, asset)
+        let assetJson = JSON.stringify(asset);
+        axios.post(`${settings.serverUrl}/assets`, {})
             .then(response => {
                 console.log("Response: " + JSON.stringify(response));
                 countSaved++;
                 saveAssets(assets);
             })
             .catch(e => {
-                assets.push(asset)
-                callback({success: false}, countSaved);
+                assets.push(asset);
+                callback(e, countSaved);
             });
+
     }
     callback(null, countSaved);
 }

@@ -6,9 +6,9 @@ import { IonContent, IonImg, IonButton, IonText, IonInput, IonLabel } from '@ion
 
 import React, { Component, useState } from 'react';
 const INITIAL_STATE = {
-  map: null,
-  latitude: null,
-  longitude: null,
+  map: "",
+  latitude: "",
+  longitude: "",
   showAssetIdPhoto: true,
   assetIdPhotoUrl: "",
   assetIdPhoto: "",
@@ -19,7 +19,8 @@ const INITIAL_STATE = {
   serialNumber: "",
   assetType: "",
   company: "",
-  assetTypeChanged: false
+  assetTypeChanged: false,
+  settings: {}
 };
 
 import { Utils } from '../../utils/Utils';
@@ -29,13 +30,14 @@ import { SettingsContextConsumer, Settings } from '../../models/SettingsContext'
 const { Camera } = Plugins;
 
 
+interface ContainerProps {
+  settings: any;
+}
 
+const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
+  const [state, setState] = useState({...INITIAL_STATE, company: settings.company, assetType: settings.defaultAssetType, settings: settings});
 
-
-export class NewAssetComponent extends Component {
-  state: any = { ...INITIAL_STATE };
-
-  async getGps() {
+  const getGps = async () => {
     // const supported = 'mediaDevices' in navigator;
     let options = {
       enableHighAccuracy: true,
@@ -51,7 +53,8 @@ export class NewAssetComponent extends Component {
       console.log(`Longitude: ${crd.longitude}`);
       console.log(`More or less ${crd.accuracy} meters.`);
 
-      this.setState({
+      setState({
+        ...state,
         latitude: crd.latitude,
         longitude: crd.longitude
       });
@@ -60,198 +63,202 @@ export class NewAssetComponent extends Component {
     }, options);
   }
 
-  
 
-  async takeAssetIdPicture() {
+
+  const takeAssetIdPicture = async () => {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
       resultType: CameraResultType.DataUrl
     });
-    let imageUrl = image.dataUrl;
-    
+    let imageUrl = (image.dataUrl != undefined) ? image.dataUrl : "";
+
     // Can be set to the src of an image now
-    this.setState({
-      assetIdPhotoUrl: imageUrl,
+    setState({
+      ...state,
+      assetIdPhotoUrl: imageUrl
     });
 
   }
 
-  async takeSerialNumberPicture() {
+  const takeSerialNumberPicture = async () => {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
       resultType: CameraResultType.DataUrl
     });
-    let imageUrl = image.dataUrl;
+    // let imageUrl = image.dataUrl;
+    let imageUrl = (image.dataUrl != undefined) ? image.dataUrl : "";
     // Can be set to the src of an image now
-    this.setState({
+    setState({
+      ...state,
       serialNumberPhotoUrl: imageUrl,
     });
   }
 
 
-  render() {
-    const { latitude,
-      longitude,
-      assetIdPhotoUrl,
-      assetIdPhoto,
-      assetId,
-      serialNumberPhoto,
-      serialNumberPhotoUrl,
-      serialNumber,
-      company,
-      assetType,
-      assetTypeChanged,
-      showAssetIdPhoto,
-      showSerialNumberPhoto
-    } = this.state;
-    return (
-      <IonContent className="ion-padding">
-        {/* // ------------- Location ----------------*/}
-        <div className="location">
-          {latitude !== null && longitude !== null &&
-            <div>
-              <IonText id="location">{latitude}, {longitude}</IonText>
-              <MapSection location={{ lat: latitude, lng: longitude, text: "" }} zoomLevel={17} />
-            </div>
-          }
-        </div>
+  // render() {
+  //   const { latitude,
+  //     longitude,
+  //     assetIdPhotoUrl,
+  //     assetIdPhoto,
+  //     assetId,
+  //     serialNumberPhoto,
+  //     serialNumberPhotoUrl,
+  //     serialNumber,
+  //     company,
+  //     assetType,
+  //     assetTypeChanged,
+  //     showAssetIdPhoto,
+  //     showSerialNumberPhoto
+  //   } = this.state;
+  return (
+    <IonContent className="ion-padding">
+      {/* // ------------- Location ----------------*/}
+      <div className="location">
+        {state.latitude !== "" && state.longitude !== "" &&
+          <div>
+            <IonText id="location">{state.latitude}, {state.longitude}</IonText>
+            <MapSection location={{ lat: state.latitude, lng: state.longitude, text: "" }} zoomLevel={17} />
+          </div>
+        }
+      </div>
 
-        <IonButton color="primary" onClick={() => this.getGps()} expand="block">
-          Update Location
+      <IonButton color="primary" onClick={() => getGps()} expand="block">
+        Update Location
         </IonButton>
 
-        {/* // ------------- Asset ID Photo ----------------*/}
-        <div className={assetIdPhotoUrl == '' ? "serialNumberPhotoContainer" : "serialNumberPhotoContainer photoContainer"}>
-          {(assetIdPhotoUrl !== '') && showAssetIdPhoto &&
-            <IonImg style={{ 'border': '1px solid black', 'minHeight': '100px' }} src={assetIdPhotoUrl} ></IonImg>
-          }
-          {(assetIdPhotoUrl !== '') &&
-            <IonButton onClick={
-              e => this.setState({ showAssetIdPhoto: !showAssetIdPhoto })
-            } expand="block">
-              {showAssetIdPhoto ?
-                <span>Hide Asset Id Photo</span> :
-                <span>Show Asset Id Photo</span>}
-            </IonButton>
-          }
-
-          <IonButton color="primary" onClick={() => {
-            this.takeAssetIdPicture();
-            this.setState({ showAssetIdPhoto: true });
-          }} expand="block">
-            {(assetIdPhotoUrl == '') ?
-              <span>Take Photo of assetID</span> :
-              <span>Update Photo of assetID </span>}
+      {/* // ------------- Asset ID Photo ----------------*/}
+      <div className={state.assetIdPhotoUrl==='' ? "serialNumberPhotoContainer" : "serialNumberPhotoContainer photoContainer"}>
+        {(state.assetIdPhotoUrl !== '') && state.showAssetIdPhoto &&
+          <IonImg style={{ 'border': '1px solid black', 'minHeight': '100px' }} src={state.assetIdPhotoUrl} ></IonImg>
+        }
+        {(state.assetIdPhotoUrl !== '') &&
+          <IonButton onClick={
+            e => setState({ ...state, showAssetIdPhoto: !state.showAssetIdPhoto })
+          } expand="block">
+            {state.showAssetIdPhoto ?
+              <span>Hide Asset Id Photo</span> :
+              <span>Show Asset Id Photo</span>}
           </IonButton>
+        }
 
-        </div>
+        <IonButton color="primary" onClick={() => {
+          takeAssetIdPicture();
+          setState({ ...state, showAssetIdPhoto: true });
+        }} expand="block">
+          {(state.assetIdPhotoUrl==='') ?
+            <span>Take Photo of assetID</span> :
+            <span>Update Photo of assetID </span>}
+        </IonButton>
 
-        {/* // ------------- Serial Number ID Photo ----------------*/}
-        <div className={serialNumberPhotoUrl == '' ? "serialNumberPhotoContainer" : "serialNumberPhotoContainer photoContainer"}>
-          {(serialNumberPhotoUrl !== '') && (showSerialNumberPhoto) &&
-            <IonImg style={{ 'border': '1px solid black', 'minHeight': '100px' }} src={serialNumberPhotoUrl} ></IonImg>
-          }
-          {(serialNumberPhotoUrl !== '') &&
-            <IonButton onClick={
-              e => this.setState({ showSerialNumberPhoto: !showSerialNumberPhoto })
-            } expand="block">
-              {showSerialNumberPhoto ?
-                <span>Hide Serial Number Photo</span> :
-                <span>Show Serial Number Photo</span>}
-            </IonButton>
-          }
-          <IonButton color="primary" onClick={() => {
-            this.takeSerialNumberPicture();
-            this.setState({ showSerialNumberPhoto: true });
-          }} expand="block">
-            {(serialNumberPhotoUrl === '') ?
-              <span>Take Photo of serial number</span> :
-              <span>Update Photo of serial number</span>}
+      </div>
+
+      {/* // ------------- Serial Number ID Photo ----------------*/}
+      <div className={state.serialNumberPhotoUrl === '' ? "serialNumberPhotoContainer" : "serialNumberPhotoContainer photoContainer"}>
+        {(state.serialNumberPhotoUrl !== '') && (state.showSerialNumberPhoto) &&
+          <IonImg style={{ 'border': '1px solid black', 'minHeight': '100px' }} src={state.serialNumberPhotoUrl} ></IonImg>
+        }
+        {(state.serialNumberPhotoUrl !== '') &&
+          <IonButton onClick={
+            e => setState({ ...state, showSerialNumberPhoto: !state.showSerialNumberPhoto })
+          } expand="block">
+            {state.showSerialNumberPhoto ?
+              <span>Hide Serial Number Photo</span> :
+              <span>Show Serial Number Photo</span>}
           </IonButton>
+        }
+        <IonButton color="primary" onClick={() => {
+          takeSerialNumberPicture();
+          setState({ ...state, showSerialNumberPhoto: true });
+        }} expand="block">
+          {(state.serialNumberPhotoUrl === '') ?
+            <span>Take Photo of serial number</span> :
+            <span>Update Photo of serial number</span>}
+        </IonButton>
 
 
-        </div>
+      </div>
 
-        {/* // ------------- Text Boxes ----------------*/}
+      {/* // ------------- Text Boxes ----------------*/}
+      <div>
+        <IonLabel>Asset Id</IonLabel>
+        <IonInput id="assetId" value={state.assetId} placeholder="Asset Id" onIonChange={
+          e => {
+            setState({ ...state, assetId: (e.detail.value != undefined) ? e.detail.value : "undefinedAssetId" })
+          }
+        }></IonInput>
+      </div>
+
+      <div>
+        <IonLabel>Serial Number</IonLabel>
+        <IonInput id="serialNumber" value={state.serialNumber} placeholder="Serial number" onIonChange={
+          e => {
+            setState({ ...state, serialNumber: (e.detail.value != undefined) ? e.detail.value : "undefinedSerialNumber" })
+          }
+        }></IonInput>
+      </div>
+
+      <div>
         <div>
-          <IonLabel>Asset Id</IonLabel>
-          <IonInput id="assetId" value={assetId} placeholder="Asset Id" onIonChange={
-            e => { this.setState({ assetId: e.detail.value }) }
+          <IonLabel>Asset Type</IonLabel>
+          <IonInput id="assetType" value={(state.assetTypeChanged) ? state.assetType : settings.defaultAssetType} placeholder="Enter Asset Type" onIonChange={
+            e => {
+              // setState({ ...state, assetTypeChanged: true });
+              setState({ ...state, assetTypeChanged: true, assetType: (e.detail.value != undefined) ? e.detail.value : settings.defaultAssetType });
+            }
           }></IonInput>
         </div>
 
-        <div>
-          <IonLabel>Serial Number</IonLabel>
-          <IonInput id="serialNumber" value={serialNumber} placeholder="Serial number" onIonChange={
-            e => { this.setState({ serialNumber: e.detail.value }) }
-          }></IonInput>
-        </div>
+        <IonLabel>Company</IonLabel>
+        <IonInput readonly={true} id="company" value={settings.company} placeholder="Company" onIonChange={
+          e => { setState({ ...state, company: (e.detail.value != undefined) ? (e.detail.value) : settings.company }) }
+        }></IonInput>
+      </div>
 
-        <SettingsContextConsumer>
-          {(context: Settings) => (<div>
-            <div>
-              <IonLabel>Asset Type</IonLabel>
-              <IonInput id="assetType" value={(assetTypeChanged) ? assetType : context.defaultAssetType} placeholder="Enter Asset Type" onIonChange={
-                e => {
-                  this.setState({ assetTypeChanged: true })
-                  this.setState({ assetType: e.detail.value })
-                }
-              }></IonInput>
-            </div>
+      {/* // ------------- Buttons ----------------*/}
+      <div>
+        <AssetsContextConsumer>
+          {(context: Assets) => (
+            <IonButton onClick={e => {
+              console.log("Save Clicked");
+              console.log("assetId", state.assetId);
+              const asset = {
+                latitude: state.latitude,
+                longitude: state.longitude,
+                inspection_time: Date.now().toString(),
+                assetType: state.assetType,
+                assetIdText: state.assetId,
+                // assetIdPhoto: assetIdPhoto,
+                assetIdPhotoUrl: state.assetIdPhotoUrl,
+                serialNumberText: state.serialNumber,
+                // serialNumberPhoto: serialNumberPhoto,
+                serialNumberPhotoUrl: state.serialNumberPhotoUrl,
+                company: state.company
+              } as Asset;
 
-            <IonLabel>Company</IonLabel>
-            <IonInput readonly={true} id="company" value={context.company} placeholder="Company" onIonChange={
-              e => { this.setState({ company: e.detail.value }) }
-            }></IonInput>
-          </div>
+              context.assets ?
+                context.assets.push(asset) :
+                context.assets = [asset];
+
+              saveAssets(context.assets);
+              setState({ ...INITIAL_STATE });
+              console.log(context.assets);
+            }//Close onClick method
+
+
+            } expand="block">Save</IonButton>
           )}
-        </SettingsContextConsumer>
+        </AssetsContextConsumer>
+        <IonButton onClick={(e) => {
+          console.log("clear clicked");
+          setState({ ...INITIAL_STATE });
+        }} expand="block">Clear</IonButton>
 
-        {/* // ------------- Buttons ----------------*/}
-        <div>
-          <AssetsContextConsumer>
-            {(context: Assets) => (
-              <IonButton onClick={e => {
-                console.log("Save Clicked");
-                console.log("assetId", assetId);
-                const asset = {
-                  latitude: latitude,
-                  longitude: longitude,
-                  inspection_time: Date.now().toString(),
-                  assetType: assetType,
-                  assetIdText: assetId,
-                  assetIdPhoto: assetIdPhoto,
-                  assetIdPhotoUrl: assetIdPhotoUrl,
-                  serialNumberText: serialNumber,
-                  serialNumberPhoto: serialNumberPhoto,
-                  serialNumberPhotoUrl: serialNumberPhotoUrl,
-                  company: company
-                } as Asset;
+      </div>
+    </IonContent >
+    // </IonPage >
+  );
+};
 
-                context.assets ?
-                  context.assets.push(asset) :
-                  context.assets = [asset];
-
-                saveAssets(context.assets);
-                this.setState({ ...INITIAL_STATE });
-                console.log(context.assets);
-              }//Close onClick method
-
-
-              } expand="block">Save</IonButton>
-            )}
-          </AssetsContextConsumer>
-          <IonButton onClick={(e) => {
-            console.log("clear clicked");
-            this.setState({ ...INITIAL_STATE });
-          }} expand="block">Clear</IonButton>
-
-        </div>
-      </IonContent>
-      // </IonPage >
-    );
-  };
-}
 export default NewAssetComponent;

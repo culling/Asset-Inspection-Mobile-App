@@ -48,8 +48,9 @@ const UploadContainer: React.FC<ContainerProps> = ({ name, settings }) => {
                 if (err !== null) {
                   console.error("Error with saving: " + err);
                   return;
+                } else {
+                  setSuccessfulUploadToast(true);
                 }
-                setSuccessfulUploadToast(true);
               });
             }
             }>Save to Cloud
