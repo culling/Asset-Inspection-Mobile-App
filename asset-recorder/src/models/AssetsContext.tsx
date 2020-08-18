@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { Plugins } from '@capacitor/core';
 import axios from 'axios';
+import { Settings } from './SettingsContext';
 
 
 export interface Asset {
@@ -38,6 +39,29 @@ export async function saveAssets(assets: Asset[]) {
         key: 'assets',
         value: JSON.stringify(assets)
     });
+}
+
+export async function uploadToCloud(assets: Asset[], settings: Settings, callback?: any) {
+    let countSaved = 0;
+    while (assets.length > 0) {
+        const asset = assets.pop();
+        if (asset === undefined) {
+            console.log("asset not ready to be uploaded\n", "asset is undefined");
+            return;
+        }
+        console.log("Asset to be loaded to cloud:", asset);
+        axios.post(`${settings.serverUrl}/assets`, asset)
+            .then(response => {
+                console.log("Response: " + JSON.stringify(response));
+                countSaved++;
+                saveAssets(assets);
+            })
+            .catch(e => {
+                assets.push(asset)
+                callback({success: false}, countSaved);
+            });
+    }
+    callback(null, countSaved);
 }
 
 let AssetsContext = createContext({} as Assets);

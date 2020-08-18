@@ -22,7 +22,7 @@ const INITIAL_STATE = {
   assetTypeChanged: false
 };
 
-
+import { Utils } from '../../utils/Utils';
 import { Plugins, CameraResultType } from '@capacitor/core';
 import { Assets, AssetsContextConsumer, Asset, saveAssets } from '../../models/AssetsContext';
 import { SettingsContextConsumer, Settings } from '../../models/SettingsContext';
@@ -37,14 +37,14 @@ export class NewAssetComponent extends Component {
 
   async getGps() {
     // const supported = 'mediaDevices' in navigator;
-    var options = {
+    let options = {
       enableHighAccuracy: true,
       timeout: 5000,
       maximumAge: 0
     };
 
     navigator.geolocation.getCurrentPosition((pos: any) => {
-      var crd = pos.coords;
+      let crd = pos.coords;
 
       console.log('Your current position is:');
       console.log(`Latitude : ${crd.latitude}`);
@@ -60,32 +60,34 @@ export class NewAssetComponent extends Component {
     }, options);
   }
 
-
+  
 
   async takeAssetIdPicture() {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
-      resultType: CameraResultType.Uri
+      resultType: CameraResultType.DataUrl
     });
-    var imageUrl = image.webPath;
+    let imageUrl = image.dataUrl;
+    
     // Can be set to the src of an image now
     this.setState({
-      assetIdPhotoUrl: imageUrl
-    })
+      assetIdPhotoUrl: imageUrl,
+    });
+
   }
 
   async takeSerialNumberPicture() {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
-      resultType: CameraResultType.Uri
+      resultType: CameraResultType.DataUrl
     });
-    var imageUrl = image.webPath;
+    let imageUrl = image.dataUrl;
     // Can be set to the src of an image now
     this.setState({
-      serialNumberPhotoUrl: imageUrl
-    })
+      serialNumberPhotoUrl: imageUrl,
+    });
   }
 
 
@@ -93,7 +95,9 @@ export class NewAssetComponent extends Component {
     const { latitude,
       longitude,
       assetIdPhotoUrl,
+      assetIdPhoto,
       assetId,
+      serialNumberPhoto,
       serialNumberPhotoUrl,
       serialNumber,
       company,
@@ -102,14 +106,9 @@ export class NewAssetComponent extends Component {
       showAssetIdPhoto,
       showSerialNumberPhoto
     } = this.state;
-    // let [assetTypeChanged, setAssetTypeChanged] = useState(false);
-
-
     return (
-
-
       <IonContent className="ion-padding">
-
+        {/* // ------------- Location ----------------*/}
         <div className="location">
           {latitude !== null && longitude !== null &&
             <div>
@@ -117,13 +116,14 @@ export class NewAssetComponent extends Component {
               <MapSection location={{ lat: latitude, lng: longitude, text: "" }} zoomLevel={17} />
             </div>
           }
-
         </div>
+
         <IonButton color="primary" onClick={() => this.getGps()} expand="block">
           Update Location
         </IonButton>
 
-        <div className={assetIdPhotoUrl == '' ?  "serialNumberPhotoContainer": "serialNumberPhotoContainer photoContainer" }>
+        {/* // ------------- Asset ID Photo ----------------*/}
+        <div className={assetIdPhotoUrl == '' ? "serialNumberPhotoContainer" : "serialNumberPhotoContainer photoContainer"}>
           {(assetIdPhotoUrl !== '') && showAssetIdPhoto &&
             <IonImg style={{ 'border': '1px solid black', 'minHeight': '100px' }} src={assetIdPhotoUrl} ></IonImg>
           }
@@ -148,7 +148,8 @@ export class NewAssetComponent extends Component {
 
         </div>
 
-        <div className={serialNumberPhotoUrl == '' ? "serialNumberPhotoContainer" : "serialNumberPhotoContainer photoContainer" }>
+        {/* // ------------- Serial Number ID Photo ----------------*/}
+        <div className={serialNumberPhotoUrl == '' ? "serialNumberPhotoContainer" : "serialNumberPhotoContainer photoContainer"}>
           {(serialNumberPhotoUrl !== '') && (showSerialNumberPhoto) &&
             <IonImg style={{ 'border': '1px solid black', 'minHeight': '100px' }} src={serialNumberPhotoUrl} ></IonImg>
           }
@@ -173,6 +174,7 @@ export class NewAssetComponent extends Component {
 
         </div>
 
+        {/* // ------------- Text Boxes ----------------*/}
         <div>
           <IonLabel>Asset Id</IonLabel>
           <IonInput id="assetId" value={assetId} placeholder="Asset Id" onIonChange={
@@ -206,6 +208,8 @@ export class NewAssetComponent extends Component {
           </div>
           )}
         </SettingsContextConsumer>
+
+        {/* // ------------- Buttons ----------------*/}
         <div>
           <AssetsContextConsumer>
             {(context: Assets) => (
@@ -218,10 +222,10 @@ export class NewAssetComponent extends Component {
                   inspection_time: Date.now().toString(),
                   assetType: assetType,
                   assetIdText: assetId,
-                  assetIdPhoto: null,
+                  assetIdPhoto: assetIdPhoto,
                   assetIdPhotoUrl: assetIdPhotoUrl,
                   serialNumberText: serialNumber,
-                  serialNumberPhoto: null,
+                  serialNumberPhoto: serialNumberPhoto,
                   serialNumberPhotoUrl: serialNumberPhotoUrl,
                   company: company
                 } as Asset;
