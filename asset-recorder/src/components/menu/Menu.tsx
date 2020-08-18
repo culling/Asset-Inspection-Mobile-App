@@ -78,7 +78,9 @@ const Menu: React.FC = () => {
   return (
     <IonMenu contentId="main" type="overlay">
       <IonContent>
-        <IonList id="menu-list">
+        <IonList id="NewSession-list">
+          {/* <IonListHeader></IonListHeader> */}
+          {/* <IonNote>hi@ionicframework.com</IonNote> */}
           {appPages.map((appPage, index) => {
             return (
               <IonMenuToggle key={index} autoHide={false}>

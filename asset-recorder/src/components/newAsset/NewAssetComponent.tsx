@@ -23,7 +23,7 @@ const INITIAL_STATE = {
   settings: {}
 };
 
-import { Utils } from '../../utils/Utils';
+
 import { Plugins, CameraResultType } from '@capacitor/core';
 import { Assets, AssetsContextConsumer, Asset, saveAssets } from '../../models/AssetsContext';
 import { SettingsContextConsumer, Settings } from '../../models/SettingsContext';
@@ -39,14 +39,14 @@ const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
 
   const getGps = async () => {
     // const supported = 'mediaDevices' in navigator;
-    let options = {
+    var options = {
       enableHighAccuracy: true,
       timeout: 5000,
       maximumAge: 0
     };
 
     navigator.geolocation.getCurrentPosition((pos: any) => {
-      let crd = pos.coords;
+      var crd = pos.coords;
 
       console.log('Your current position is:');
       console.log(`Latitude : ${crd.latitude}`);
@@ -76,6 +76,7 @@ const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
     // Can be set to the src of an image now
     setState({
       ...state,
+      showAssetIdPhoto: true,
       assetIdPhotoUrl: imageUrl
     });
 
@@ -92,6 +93,7 @@ const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
     // Can be set to the src of an image now
     setState({
       ...state,
+      showSerialNumberPhoto: true,
       serialNumberPhotoUrl: imageUrl,
     });
   }
@@ -230,9 +232,10 @@ const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
                 assetType: state.assetType,
                 assetIdText: state.assetId,
                 // assetIdPhoto: assetIdPhoto,
+                assetIdPhoto: state.assetIdPhoto,
                 assetIdPhotoUrl: state.assetIdPhotoUrl,
                 serialNumberText: state.serialNumber,
-                // serialNumberPhoto: serialNumberPhoto,
+                serialNumberPhoto: state.serialNumberPhoto,
                 serialNumberPhotoUrl: state.serialNumberPhotoUrl,
                 company: state.company
               } as Asset;

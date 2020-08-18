@@ -14,7 +14,7 @@ export interface Asset {
     assetIdPhotoUrl?: any;
     serialNumberText: string;
     serialNumberPhoto?: any;
-    serialNumberPhotoUrl?: string;
+    serialNumberPhotoUrl?: any;
     company?: string;
 }
 
@@ -49,9 +49,14 @@ export async function uploadToCloud(assets: Asset[], settings: Settings, callbac
             console.log("asset not ready to be uploaded\n", "asset is undefined");
             return;
         }
+        
         console.log("Asset to be loaded to cloud:", asset);
-        let assetJson = JSON.stringify(asset);
-        axios.post(`${settings.serverUrl}/assets`, {})
+        asset.assetIdPhoto      = null;
+        asset.assetIdPhotoUrl   = null;
+        asset.serialNumberPhoto = null;
+        asset.serialNumberPhotoUrl =  null;
+
+        axios.post(`${settings.serverUrl}/assets`, asset)
             .then(response => {
                 console.log("Response: " + JSON.stringify(response));
                 countSaved++;

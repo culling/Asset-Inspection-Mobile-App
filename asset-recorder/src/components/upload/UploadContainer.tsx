@@ -26,30 +26,10 @@ const UploadContainer: React.FC<ContainerProps> = ({ name, settings }) => {
               console.log("Save All Clicked");
 
               console.log("Assets:", context.assets);
-
-              // while (context.assets.length > 0) {
-              //   const asset = context.assets.pop();
-              //   if (asset === undefined) {
-              //     console.log("asset not ready to be uploaded\n", "asset is undefined");
-              //     return;
-              //   }
-              //   console.log("Asset:", asset);
-              //   axios.post(`${settings.serverUrl}/assets`, asset)
-              //     .then(response => {
-              //       console.log("Response: " + JSON.stringify(response));
-              //       if(context.assets.length === 0){
-              //         setSuccessfulUploadToast(true);
-              //       }
-              //       saveAssets(context.assets);
-              //     })
-              //     .catch(e => context.assets.push(asset));
-              //   }
               uploadToCloud(context.assets, settings, (err: any, success: any) => {
-                if (err !== null) {
-                  console.error("Error with saving: " + err);
-                  return;
-                } else {
+                if (err == null) {
                   setSuccessfulUploadToast(true);
+                  console.log("Upload Success: ", success);
                 }
               });
             }
