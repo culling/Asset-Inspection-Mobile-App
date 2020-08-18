@@ -1,8 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { Plugins } from '@capacitor/core';
 import axios from 'axios';
-import { resolve } from 'dns';
-import { rejects } from 'assert';
 
 
 export interface Asset {
