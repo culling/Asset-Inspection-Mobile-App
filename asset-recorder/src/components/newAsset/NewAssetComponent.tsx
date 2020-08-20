@@ -26,17 +26,21 @@ const INITIAL_STATE = {
 
 import { Plugins, CameraResultType } from '@capacitor/core';
 import { Assets, AssetsContextConsumer, Asset, saveAssets } from '../../models/AssetsContext';
-import { SettingsContextConsumer, Settings } from '../../models/SettingsContext';
 const { Camera } = Plugins;
 
-
+/**
+ * Import the settings from higher up
+ */
 interface ContainerProps {
   settings: any;
 }
 
 const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
-  const [state, setState] = useState({...INITIAL_STATE, company: settings.company, assetType: settings.defaultAssetType, settings: settings});
+  const [state, setState] = useState({ ...INITIAL_STATE, company: settings.company, assetType: settings.defaultAssetType, settings: settings });
 
+  /**
+   * Get the GPS location and set in state
+   */
   const getGps = async () => {
     // const supported = 'mediaDevices' in navigator;
     var options = {
@@ -44,7 +48,6 @@ const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
       timeout: 5000,
       maximumAge: 0
     };
-
     navigator.geolocation.getCurrentPosition((pos: any) => {
       var crd = pos.coords;
 
@@ -64,7 +67,9 @@ const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
   }
 
 
-
+  /**
+   * Take a picture of the asset id and set in state
+   */
   const takeAssetIdPicture = async () => {
     const image = await Camera.getPhoto({
       quality: 90,
@@ -73,24 +78,24 @@ const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
     });
     let imageUrl = (image.dataUrl != undefined) ? image.dataUrl : "";
 
-    // Can be set to the src of an image now
     setState({
       ...state,
       showAssetIdPhoto: true,
       assetIdPhotoUrl: imageUrl
     });
-
   }
 
+  /**
+   * Take a serial number picture and set in state
+   */
   const takeSerialNumberPicture = async () => {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
       resultType: CameraResultType.DataUrl
     });
-    // let imageUrl = image.dataUrl;
     let imageUrl = (image.dataUrl != undefined) ? image.dataUrl : "";
-    // Can be set to the src of an image now
+
     setState({
       ...state,
       showSerialNumberPhoto: true,
@@ -98,22 +103,9 @@ const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
     });
   }
 
-
-  // render() {
-  //   const { latitude,
-  //     longitude,
-  //     assetIdPhotoUrl,
-  //     assetIdPhoto,
-  //     assetId,
-  //     serialNumberPhoto,
-  //     serialNumberPhotoUrl,
-  //     serialNumber,
-  //     company,
-  //     assetType,
-  //     assetTypeChanged,
-  //     showAssetIdPhoto,
-  //     showSerialNumberPhoto
-  //   } = this.state;
+  /**
+   * Render the component
+   */
   return (
     <IonContent className="ion-padding">
       {/* // ------------- Location ----------------*/}
@@ -131,25 +123,28 @@ const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
         </IonButton>
 
       {/* // ------------- Asset ID Photo ----------------*/}
-      <div className={state.assetIdPhotoUrl==='' ? "serialNumberPhotoContainer" : "serialNumberPhotoContainer photoContainer"}>
-        {(state.assetIdPhotoUrl !== '') && state.showAssetIdPhoto &&
-          <IonImg style={{ 'border': '1px solid black', 'minHeight': '100px' }} src={state.assetIdPhotoUrl} ></IonImg>
-        }
+      <div className={state.assetIdPhotoUrl === '' ? "assetIdPhotoContainer" : "assetIdPhotoContainer photoContainer"}>
+        {/** Only show the photo and associated buttons if the photo url is not empty */}
         {(state.assetIdPhotoUrl !== '') &&
-          <IonButton onClick={
-            e => setState({ ...state, showAssetIdPhoto: !state.showAssetIdPhoto })
-          } expand="block">
-            {state.showAssetIdPhoto ?
-              <span>Hide Asset Id Photo</span> :
-              <span>Show Asset Id Photo</span>}
-          </IonButton>
-        }
+          <div>
 
+            {(state.showAssetIdPhoto) &&
+              <IonImg style={{ 'border': '1px solid black', 'minHeight': '100px' }} src={state.assetIdPhotoUrl} ></IonImg>
+            }
+            <IonButton onClick={
+              e => setState({ ...state, showAssetIdPhoto: !state.showAssetIdPhoto })
+            } expand="block">
+              {state.showAssetIdPhoto ?
+                <span>Hide Asset Id Photo</span> :
+                <span>Show Asset Id Photo</span>}
+            </IonButton>
+          </div>
+        }
         <IonButton color="primary" onClick={() => {
           takeAssetIdPicture();
           setState({ ...state, showAssetIdPhoto: true });
         }} expand="block">
-          {(state.assetIdPhotoUrl==='') ?
+          {(state.assetIdPhotoUrl === '') ?
             <span>Take Photo of assetID</span> :
             <span>Update Photo of assetID </span>}
         </IonButton>
@@ -158,17 +153,22 @@ const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
 
       {/* // ------------- Serial Number ID Photo ----------------*/}
       <div className={state.serialNumberPhotoUrl === '' ? "serialNumberPhotoContainer" : "serialNumberPhotoContainer photoContainer"}>
-        {(state.serialNumberPhotoUrl !== '') && (state.showSerialNumberPhoto) &&
-          <IonImg style={{ 'border': '1px solid black', 'minHeight': '100px' }} src={state.serialNumberPhotoUrl} ></IonImg>
-        }
+        {/** Only show the photo and associated buttons if the photo url is not empty */}
         {(state.serialNumberPhotoUrl !== '') &&
-          <IonButton onClick={
-            e => setState({ ...state, showSerialNumberPhoto: !state.showSerialNumberPhoto })
-          } expand="block">
-            {state.showSerialNumberPhoto ?
-              <span>Hide Serial Number Photo</span> :
-              <span>Show Serial Number Photo</span>}
-          </IonButton>
+          <div>
+            {(state.showSerialNumberPhoto) &&
+              <IonImg style={{ 'border': '1px solid black', 'minHeight': '100px' }} src={state.serialNumberPhotoUrl} ></IonImg>
+            }
+
+            <IonButton onClick={
+              e => setState({ ...state, showSerialNumberPhoto: !state.showSerialNumberPhoto })
+            } expand="block">
+              {state.showSerialNumberPhoto ?
+                <span>Hide Serial Number Photo</span> :
+                <span>Show Serial Number Photo</span>}
+            </IonButton>
+
+          </div>
         }
         <IonButton color="primary" onClick={() => {
           takeSerialNumberPicture();
@@ -231,7 +231,6 @@ const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
                 inspection_time: Date.now().toString(),
                 assetType: state.assetType,
                 assetIdText: state.assetId,
-                // assetIdPhoto: assetIdPhoto,
                 assetIdPhoto: state.assetIdPhoto,
                 assetIdPhotoUrl: state.assetIdPhotoUrl,
                 serialNumberText: state.serialNumber,
@@ -260,7 +259,7 @@ const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
 
       </div>
     </IonContent >
-    // </IonPage >
+
   );
 };
 
