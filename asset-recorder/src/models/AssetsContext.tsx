@@ -23,9 +23,9 @@ export interface Asset {
 /**
  * Assets interface for TypeScript
  */
-export interface Assets {
-    assets: Asset[];
-}
+// export interface Assets {
+//     assets: Asset[];
+// }
 
 const initalAssets = [] as Asset[];
 const { Storage } = Plugins;
