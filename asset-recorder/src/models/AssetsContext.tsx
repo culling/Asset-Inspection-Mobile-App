@@ -3,7 +3,9 @@ import { Plugins } from '@capacitor/core';
 import axios from 'axios';
 import { Settings } from './SettingsContext';
 
-
+/**
+ * Asset interface for TypeScript
+ */
 export interface Asset {
     latitude: string;
     longitude: string;
@@ -18,14 +20,20 @@ export interface Asset {
     company?: string;
 }
 
+/**
+ * Assets interface for TypeScript
+ */
 export interface Assets {
     assets: Asset[];
 }
 
 const initalAssets = [] as Asset[];
-
 const { Storage } = Plugins;
 
+/**
+ * Get previous assets from server
+ * @param server to pull previous assets from
+ */
 export async function getPreviousAssets(server: string) {
     const url = `${server}/assets`;
     return await axios.get(url).then((res: any) => {
@@ -33,7 +41,10 @@ export async function getPreviousAssets(server: string) {
     });
 }
 
-
+/**
+ * Save assets
+ * @param assets to save
+ */
 export async function saveAssets(assets: Asset[]) {
     await Storage.set({
         key: 'assets',
@@ -41,6 +52,12 @@ export async function saveAssets(assets: Asset[]) {
     });
 }
 
+/**
+ * Upload to cloud
+ * @param assets to upload to cloud
+ * @param settings holding the server Url
+ * @param callback function called when all assets have been saved or an error has been thrown
+ */
 export async function uploadToCloud(assets: Asset[], settings: Settings, callback?: any) {
     let countSaved = 0;
     while (assets.length > 0) {
@@ -71,8 +88,15 @@ export async function uploadToCloud(assets: Asset[], settings: Settings, callbac
     callback(null, countSaved);
 }
 
+/**
+ * Assets context
+ */
 let AssetsContext = createContext({} as Assets);
 
+/**
+ * Assets Context Provider
+ * @param props are child react nodes that can access the context
+ */
 let AssetsContextProvider = (props: { children: React.ReactNode; }) => {
     const [assets, setAssets] = useState(initalAssets);
 
@@ -94,6 +118,10 @@ let AssetsContextProvider = (props: { children: React.ReactNode; }) => {
     )
 }
 
+/**
+ * Assets Context Consumer 
+ * Can use the assets context provided by the provider
+ */
 let AssetsContextConsumer = AssetsContext.Consumer;
 
 export { AssetsContext, AssetsContextProvider, AssetsContextConsumer };

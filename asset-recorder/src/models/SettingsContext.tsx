@@ -1,15 +1,20 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { Plugins } from '@capacitor/core';
+const { Storage } = Plugins;
 
+/**
+ * Settings interface for TypeScript
+ */
 export interface Settings {
     serverUrl: string | number | null | undefined;
     company: string;
     defaultAssetType: string;
 }
 
-
-const { Storage } = Plugins;
-
+/**
+ * Save settings
+ * @param settings to save
+ */
 export async function saveSettings(settings: Settings) {
     await Storage.set({
         key: 'settings',
@@ -17,8 +22,14 @@ export async function saveSettings(settings: Settings) {
     });
 }
 
-
+/**
+ * Create settings context
+ */
 let SettingsContext = createContext({} as Settings);
+
+/**
+ * Default settings used for inital setup
+ */
 const defaultSettings = {
     company: "Acme Inc. 2",
     defaultAssetType: "Computer",
@@ -26,9 +37,12 @@ const defaultSettings = {
 } as Settings
 
 
+/**
+ * Settings Context Provider
+ * @param props are child react nodes that can access the context
+ */
 let SettingsContextProvider = (props: {children: React.ReactNode; }) => {
     const [currentSettings, setCurrentSettings] = useState(defaultSettings);
-
 
     useEffect(() => {
         Promise.resolve(Storage.get({ key: 'settings' }).then(
@@ -52,6 +66,10 @@ let SettingsContextProvider = (props: {children: React.ReactNode; }) => {
     )
 }
 
+/**
+ * Settings Context Consumer 
+ * Can use the settings context provided by the provider
+ */
 let SettingsContextConsumer = SettingsContext.Consumer;
 
 export { SettingsContext, SettingsContextProvider, SettingsContextConsumer };
