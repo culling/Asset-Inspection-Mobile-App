@@ -26,6 +26,8 @@ const INITIAL_STATE = {
 
 import { Plugins, CameraResultType } from '@capacitor/core';
 import { Assets, AssetsContextConsumer, Asset, saveAssets } from '../../models/AssetsContext';
+import AssetIdPhoto from './AssetIdPhoto';
+import SerialNumberPhoto from './SerialNumberPhoto';
 const { Camera } = Plugins;
 
 /**
@@ -67,23 +69,23 @@ const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
   }
 
 
-  /**
-   * Take a picture of the asset id and set in state
-   */
-  const takeAssetIdPicture = async () => {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl
-    });
-    let imageUrl = (image.dataUrl != undefined) ? image.dataUrl : "";
+  // /**
+  //  * Take a picture of the asset id and set in state
+  //  */
+  // const takeAssetIdPicture = async () => {
+  //   const image = await Camera.getPhoto({
+  //     quality: 90,
+  //     allowEditing: false,
+  //     resultType: CameraResultType.DataUrl
+  //   });
+  //   let imageUrl = (image.dataUrl != undefined) ? image.dataUrl : "";
 
-    setState({
-      ...state,
-      showAssetIdPhoto: true,
-      assetIdPhotoUrl: imageUrl
-    });
-  }
+  //   setState({
+  //     ...state,
+  //     showAssetIdPhoto: true,
+  //     assetIdPhotoUrl: imageUrl
+  //   });
+  // }
 
   /**
    * Take a serial number picture and set in state
@@ -123,64 +125,11 @@ const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
         </IonButton>
 
       {/* // ------------- Asset ID Photo ----------------*/}
-      <div className={state.assetIdPhotoUrl === '' ? "assetIdPhotoContainer" : "assetIdPhotoContainer photoContainer"}>
-        {/** Only show the photo and associated buttons if the photo url is not empty */}
-        {(state.assetIdPhotoUrl !== '') &&
-          <div>
-
-            {(state.showAssetIdPhoto) &&
-              <IonImg style={{ 'border': '1px solid black', 'minHeight': '100px' }} src={state.assetIdPhotoUrl} ></IonImg>
-            }
-            <IonButton onClick={
-              e => setState({ ...state, showAssetIdPhoto: !state.showAssetIdPhoto })
-            } expand="block">
-              {state.showAssetIdPhoto ?
-                <span>Hide Asset Id Photo</span> :
-                <span>Show Asset Id Photo</span>}
-            </IonButton>
-          </div>
-        }
-        <IonButton color="primary" onClick={() => {
-          takeAssetIdPicture();
-          setState({ ...state, showAssetIdPhoto: true });
-        }} expand="block">
-          {(state.assetIdPhotoUrl === '') ?
-            <span>Take Photo of assetID</span> :
-            <span>Update Photo of assetID </span>}
-        </IonButton>
-
-      </div>
+      <AssetIdPhoto state={state} setState={setState} />
 
       {/* // ------------- Serial Number ID Photo ----------------*/}
-      <div className={state.serialNumberPhotoUrl === '' ? "serialNumberPhotoContainer" : "serialNumberPhotoContainer photoContainer"}>
-        {/** Only show the photo and associated buttons if the photo url is not empty */}
-        {(state.serialNumberPhotoUrl !== '') &&
-          <div>
-            {(state.showSerialNumberPhoto) &&
-              <IonImg style={{ 'border': '1px solid black', 'minHeight': '100px' }} src={state.serialNumberPhotoUrl} ></IonImg>
-            }
+      <SerialNumberPhoto state={state} setState={setState} />
 
-            <IonButton onClick={
-              e => setState({ ...state, showSerialNumberPhoto: !state.showSerialNumberPhoto })
-            } expand="block">
-              {state.showSerialNumberPhoto ?
-                <span>Hide Serial Number Photo</span> :
-                <span>Show Serial Number Photo</span>}
-            </IonButton>
-
-          </div>
-        }
-        <IonButton color="primary" onClick={() => {
-          takeSerialNumberPicture();
-          setState({ ...state, showSerialNumberPhoto: true });
-        }} expand="block">
-          {(state.serialNumberPhotoUrl === '') ?
-            <span>Take Photo of serial number</span> :
-            <span>Update Photo of serial number</span>}
-        </IonButton>
-
-
-      </div>
 
       {/* // ------------- Text Boxes ----------------*/}
       <div>
