@@ -20,6 +20,13 @@ export interface Asset {
     company?: string;
 }
 
+/**
+ * Assets interface for TypeScript
+ */
+export interface Assets {
+    assets: Asset[];
+}
+
 const initalAssets = [] as Asset[];
 const { Storage } = Plugins;
 
@@ -59,12 +66,12 @@ export async function uploadToCloud(assets: Asset[], settings: Settings, callbac
             console.log("asset not ready to be uploaded\n", "asset is undefined");
             return;
         }
-        
+
         console.log("Asset to be loaded to cloud:", asset);
-        asset.assetIdPhoto      = null;
-        asset.assetIdPhotoUrl   = null;
+        asset.assetIdPhoto = null;
+        asset.assetIdPhotoUrl = null;
         asset.serialNumberPhoto = null;
-        asset.serialNumberPhotoUrl =  null;
+        asset.serialNumberPhotoUrl = null;
 
         axios.post(`${settings.serverUrl}/assets`, asset)
             .then(response => {
