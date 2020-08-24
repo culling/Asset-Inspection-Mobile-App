@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../Default.css';
-import { IonLabel, IonItem, IonCheckbox } from '@ionic/react';
-import { AssetsContextConsumer, Assets, AssetsContextProvider } from '../../contexts/AssetsContext';
-import { filter } from 'ionicons/icons';
+import { IonLabel, IonItem } from '@ionic/react';
 
 
 interface ContainerProps {

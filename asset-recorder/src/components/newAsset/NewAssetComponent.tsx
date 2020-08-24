@@ -2,7 +2,7 @@
 
 import MapSection from '../map/Map' // import the map here
 import {Local } from './../../data';
-import { IonContent, IonButton, IonText, IonInput, IonLabel } from '@ionic/react';
+import { IonContent, IonButton, IonText, IonInput, IonLabel, IonToast } from '@ionic/react';
 import React, { useState } from 'react';
 
 import { AssetsContextConsumer } from '../../contexts/AssetsContext';
@@ -37,7 +37,8 @@ interface ContainerProps {
 
 const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
   const [state, setState] = useState({ ...INITIAL_STATE, company: settings.company, assetType: settings.defaultAssetType, settings: settings });
-
+  const [saveNewAssetToast, setSaveNewAssetToast] = useState(false);
+  const [clearNewAssetToast, setClearNewAssetToast] = useState(false);
   /**
    * Get the GPS location and set in state
    */
@@ -156,6 +157,7 @@ const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
                 context.assets = [asset];
 
               Local.saveAssets(context.assets);
+              setSaveNewAssetToast(true);
               setState({ ...INITIAL_STATE });
               console.log(context.assets);
             }//Close onClick method
@@ -166,10 +168,26 @@ const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
         </AssetsContextConsumer>
         <IonButton onClick={(e) => {
           console.log("clear clicked");
+          setClearNewAssetToast(true);
           setState({ ...INITIAL_STATE });
         }} expand="block">Clear</IonButton>
 
       </div>
+
+      {/*<!-- Toasts -->*/}
+      <IonToast
+            isOpen={saveNewAssetToast}
+            onDidDismiss={() => setSaveNewAssetToast(false)}
+            message={`Saved Asset`}
+            duration={2000}
+        />
+        <IonToast
+            isOpen={clearNewAssetToast}
+            onDidDismiss={() => setClearNewAssetToast(false)}
+            message={`Cleared Asset`}
+            duration={2000}
+        />
+
     </IonContent >
 
   );
