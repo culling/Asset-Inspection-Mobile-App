@@ -5,7 +5,7 @@ import { IonButton, IonToast } from '@ionic/react';
 // import axios from 'axios';
 import { AssetsContextConsumer, saveLocal,  } from '../../contexts/AssetsContext';
 import {Assets} from './../../types';
-import {Cloud} from '../../data';
+import {Cloud} from '../../dataLocations';
 import UploadInformationContainer from './UploadInformationContainer';
 
 

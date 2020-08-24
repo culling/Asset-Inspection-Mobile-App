@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SettingsContextConsumer } from '../../contexts/SettingsContext';
 import { IonLabel, IonInput, IonButton, IonContent, IonList, IonItem } from '@ionic/react';
 import {Settings} from './../../types';
-import {Local} from './../../data';
+import {Local} from '../../dataLocations';
 
 interface ContainerProps {
   name: string;

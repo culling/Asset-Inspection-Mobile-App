@@ -3,7 +3,7 @@ import '../Default.css';
 import { IonList, IonContent, IonButton, IonCheckbox } from '@ionic/react';
 import { AssetsContextConsumer } from '../../contexts/AssetsContext';
 import {Asset, Assets} from './../../types';
-import { Local } from './../../data';
+import { Local } from '../../dataLocations';
 import AssetListItem from '../assetListItem/AssetListItem';
 
 interface ContainerProps {

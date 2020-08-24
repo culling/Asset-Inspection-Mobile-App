@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { Settings } from '../types';
-import { Local } from '../data';
+import { Local } from '../dataLocations';
 
 /**
  * Create settings context

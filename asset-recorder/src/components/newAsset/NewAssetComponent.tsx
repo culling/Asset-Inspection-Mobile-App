@@ -1,7 +1,7 @@
 /* eslint-disable import/first */
 
 import MapSection from '../map/Map' // import the map here
-import {Local } from './../../data';
+import {Local } from '../../dataLocations';
 import { IonContent, IonButton, IonText, IonInput, IonLabel, IonToast } from '@ionic/react';
 import React, { useState } from 'react';
 

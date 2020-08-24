@@ -3,7 +3,7 @@ import '../Default.css';
 import { IonList, IonContent, IonToast } from '@ionic/react';
 import AssetListItem from '../assetListItem/AssetListItem';
 
-import { Cloud } from '../../data';
+import { Cloud } from '../../dataLocations';
 
 interface ContainerProps {
   settings: any;

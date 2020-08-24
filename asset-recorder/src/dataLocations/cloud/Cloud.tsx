@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Asset, Settings } from '../../types';
 
 // import { saveLocal } from '../../models/AssetsContext';
-import { Local } from './../';
+import { Local } from '..';
 
 class Cloud {
     /**
