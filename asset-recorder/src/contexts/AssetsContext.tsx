@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { Asset, Assets } from './../types';
-import { Local } from './../data';
+import { Asset, Assets } from '../types';
+import { Local } from '../data';
 
 const initalAssets = [] as Asset[];
 

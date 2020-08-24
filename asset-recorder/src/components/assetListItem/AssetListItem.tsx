@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../Default.css';
 import { IonLabel, IonItem, IonCheckbox } from '@ionic/react';
-import { AssetsContextConsumer, Assets, AssetsContextProvider } from '../../models/AssetsContext';
+import { AssetsContextConsumer, Assets, AssetsContextProvider } from '../../contexts/AssetsContext';
 import { filter } from 'ionicons/icons';
 
 

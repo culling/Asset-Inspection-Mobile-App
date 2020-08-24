@@ -9,8 +9,8 @@ import PreviousSessionsContainer from '../components/previousSessions/PreviousSe
 import CurrentSessionContainer from '../components/currentSession/CurrentSessionContainer';
 import SettingsContainer from '../components/settings/SettingsContainer';
 import './Page.css';
-import { SettingsContextConsumer, Settings } from '../models/SettingsContext';
-import { AssetsContextConsumer, Assets } from '../models/AssetsContext';
+import { SettingsContextConsumer, Settings } from '../contexts/SettingsContext';
+import { AssetsContextConsumer, Assets } from '../contexts/AssetsContext';
 
 
 

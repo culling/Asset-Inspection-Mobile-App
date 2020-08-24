@@ -1,26 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { Plugins } from '@capacitor/core';
-const { Storage } = Plugins;
-
-/**
- * Settings interface for TypeScript
- */
-export interface Settings {
-    serverUrl: string | number | null | undefined;
-    company: string;
-    defaultAssetType: string;
-}
-
-/**
- * Save settings
- * @param settings to save
- */
-export async function saveSettings(settings: Settings) {
-    await Storage.set({
-        key: 'settings',
-        value: JSON.stringify(settings)
-    });
-}
+import { Settings } from '../types';
+import { Local } from '../data';
 
 /**
  * Create settings context
@@ -41,18 +21,12 @@ const defaultSettings = {
  * Settings Context Provider
  * @param props are child react nodes that can access the context
  */
-let SettingsContextProvider = (props: {children: React.ReactNode; }) => {
+let SettingsContextProvider = (props: { children: React.ReactNode; }) => {
     const [currentSettings, setCurrentSettings] = useState(defaultSettings);
 
     useEffect(() => {
-        Promise.resolve(Storage.get({ key: 'settings' }).then(
-            (result) => {
-                if (typeof result.value === 'string') {
-                    setCurrentSettings(JSON.parse(result.value) as Settings);
-                }
-            },
-            (reason) => console.log("Failed to load settings from storage because of: " + reason)
-        ));
+        Promise.resolve(
+            Local.loadSettings(setCurrentSettings));
     }, []); // Nifty trick with useEffect from: https://css-tricks.com/run-useeffect-only-once/
 
     return (

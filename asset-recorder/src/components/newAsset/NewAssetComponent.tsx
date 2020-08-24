@@ -5,7 +5,7 @@ import {Local } from './../../data';
 import { IonContent, IonButton, IonText, IonInput, IonLabel } from '@ionic/react';
 import React, { useState } from 'react';
 
-import { AssetsContextConsumer } from '../../models/AssetsContext';
+import { AssetsContextConsumer } from '../../contexts/AssetsContext';
 import { Asset, Assets } from './../../types';
 import AssetIdPhoto from './AssetIdPhoto';
 import SerialNumberPhoto from './SerialNumberPhoto';

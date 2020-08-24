@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { SettingsContextConsumer, Settings, saveSettings } from '../../models/SettingsContext';
+import { SettingsContextConsumer } from '../../contexts/SettingsContext';
 import { IonLabel, IonInput, IonButton, IonContent, IonList, IonItem } from '@ionic/react';
-
+import {Settings} from './../../types';
+import {Local} from './../../data';
 
 interface ContainerProps {
   name: string;
@@ -72,7 +73,7 @@ const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
               defaultAssetType: context.defaultAssetType,
               serverUrl: context.serverUrl
             }
-            saveSettings(settings);
+            Local.saveSettings(settings);
           }} expand="block">Save</IonButton>
 
         </div>)

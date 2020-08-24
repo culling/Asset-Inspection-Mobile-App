@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-import { Asset } from '../../types';
-import { Settings } from '../../models/SettingsContext';
+import { Asset, Settings } from '../../types';
+
 // import { saveLocal } from '../../models/AssetsContext';
 import { Local } from './../';
 

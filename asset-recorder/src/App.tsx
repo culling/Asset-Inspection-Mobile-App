@@ -27,8 +27,8 @@ import './theme/variables.css';
 
 
 /* Import models */
-import {Asset, AssetsContextProvider} from "./models/AssetsContext";
-import {Settings, SettingsContextProvider} from "./models/SettingsContext";
+import {Asset, AssetsContextProvider} from "./contexts/AssetsContext";
+import {Settings, SettingsContextProvider} from "./contexts/SettingsContext";
 
 const App: React.FC = () => {
 
