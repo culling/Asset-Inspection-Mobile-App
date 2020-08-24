@@ -1,10 +1,15 @@
 /* eslint-disable import/first */
 
 import MapSection from '../map/Map' // import the map here
+import {Local } from './../../data';
+import { IonContent, IonButton, IonText, IonInput, IonLabel } from '@ionic/react';
+import React, { useState } from 'react';
 
-import { IonContent, IonImg, IonButton, IonText, IonInput, IonLabel } from '@ionic/react';
+import { AssetsContextConsumer } from '../../models/AssetsContext';
+import { Asset, Assets } from './../../types';
+import AssetIdPhoto from './AssetIdPhoto';
+import SerialNumberPhoto from './SerialNumberPhoto';
 
-import React, { Component, useState } from 'react';
 const INITIAL_STATE = {
   map: "",
   latitude: "",
@@ -22,13 +27,6 @@ const INITIAL_STATE = {
   assetTypeChanged: false,
   settings: {}
 };
-
-
-import { Plugins, CameraResultType } from '@capacitor/core';
-import { Assets, AssetsContextConsumer, Asset, saveAssets } from '../../models/AssetsContext';
-import AssetIdPhoto from './AssetIdPhoto';
-import SerialNumberPhoto from './SerialNumberPhoto';
-const { Camera } = Plugins;
 
 /**
  * Import the settings from higher up
@@ -69,41 +67,6 @@ const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
   }
 
 
-  // /**
-  //  * Take a picture of the asset id and set in state
-  //  */
-  // const takeAssetIdPicture = async () => {
-  //   const image = await Camera.getPhoto({
-  //     quality: 90,
-  //     allowEditing: false,
-  //     resultType: CameraResultType.DataUrl
-  //   });
-  //   let imageUrl = (image.dataUrl != undefined) ? image.dataUrl : "";
-
-  //   setState({
-  //     ...state,
-  //     showAssetIdPhoto: true,
-  //     assetIdPhotoUrl: imageUrl
-  //   });
-  // }
-
-  /**
-   * Take a serial number picture and set in state
-   */
-  const takeSerialNumberPicture = async () => {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl
-    });
-    let imageUrl = (image.dataUrl != undefined) ? image.dataUrl : "";
-
-    setState({
-      ...state,
-      showSerialNumberPhoto: true,
-      serialNumberPhotoUrl: imageUrl,
-    });
-  }
 
   /**
    * Render the component
@@ -192,7 +155,7 @@ const NewAssetComponent: React.FC<ContainerProps> = ({ settings }) => {
                 context.assets.push(asset) :
                 context.assets = [asset];
 
-              saveAssets(context.assets);
+              Local.saveAssets(context.assets);
               setState({ ...INITIAL_STATE });
               console.log(context.assets);
             }//Close onClick method

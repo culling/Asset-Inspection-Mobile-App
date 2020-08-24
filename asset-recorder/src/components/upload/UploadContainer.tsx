@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import './../Default.css';
 
 import { IonButton, IonToast } from '@ionic/react';
-import axios from 'axios';
-import { Assets, AssetsContextConsumer, saveAssets, uploadToCloud } from '../../models/AssetsContext';
+// import axios from 'axios';
+import { AssetsContextConsumer, saveLocal,  } from '../../models/AssetsContext';
+import {Assets} from './../../types';
+import {Cloud} from '../../data';
 import UploadInformationContainer from './UploadInformationContainer';
 
 
@@ -26,7 +28,7 @@ const UploadContainer: React.FC<ContainerProps> = ({ name, settings }) => {
               console.log("Save All Clicked");
 
               console.log("Assets:", context.assets);
-              uploadToCloud(context.assets, settings, (err: any, success: any) => {
+              Cloud.uploadToCloud(context.assets, settings, (err: any, success: any) => {
                 if (err == null) {
                   setSuccessfulUploadToast(true);
                   console.log("Upload Success: ", success);

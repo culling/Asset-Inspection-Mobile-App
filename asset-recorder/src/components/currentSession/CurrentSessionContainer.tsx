@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import '../Default.css';
 import { IonList, IonContent, IonButton, IonCheckbox } from '@ionic/react';
-import { Asset, saveAssets, AssetsContext, AssetsContextConsumer, Assets } from '../../models/AssetsContext';
+import { AssetsContextConsumer } from '../../models/AssetsContext';
+import {Asset, Assets} from './../../types';
+import { Local } from './../../data';
 import AssetListItem from '../assetListItem/AssetListItem';
-import { checkbox } from 'ionicons/icons';
-import { off } from 'process';
 
 interface ContainerProps {
   name: string;
@@ -61,7 +61,7 @@ const CurrentSessionContainer: React.FC<ContainerProps> = ({ name, assetsProps }
               console.log("filteredAssets: ", filteredAssets);
 
               setAssets(filteredAssets);
-              saveAssets(filteredAssets);
+              Local.saveAssets(filteredAssets);
               context.assets = filteredAssets;
 
 

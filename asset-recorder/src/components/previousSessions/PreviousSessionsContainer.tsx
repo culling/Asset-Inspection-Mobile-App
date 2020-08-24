@@ -2,11 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import '../Default.css';
 import { IonList, IonContent, IonToast } from '@ionic/react';
 import AssetListItem from '../assetListItem/AssetListItem';
-import axios from 'axios';
 
 import ServerConverter from "./../../models/ServerConverter";
-import { Settings } from 'http2';
-import { getPreviousAssets } from '../../models/AssetsContext';
+import { Cloud } from '../../data';
 
 interface ContainerProps {
   name: string;
@@ -23,7 +21,7 @@ const PreviousSessionsContainer: React.FC<ContainerProps> = ({ name, settings })
 
   useEffect(() => {
     console.log("settings: ", settings);
-    getPreviousAssets(settings.serverUrl).then((previousAssets) => {
+    Cloud.getPreviousAssets(settings.serverUrl).then((previousAssets) => {
       if (previousAssets && previousAssets.length === 0) {
         setNoRemoteAssetsToast(true);
       } else {
