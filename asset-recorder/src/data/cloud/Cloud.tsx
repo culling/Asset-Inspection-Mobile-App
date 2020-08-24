@@ -51,9 +51,23 @@ class Cloud {
     static async getPreviousAssets(server: string) {
         const url = `${server}/assets`;
         return await axios.get(url).then((res: any) => {
-            return (res.data);
+            let assets = res.data.map((assetSqlJson: any) => {return this.convert(assetSqlJson)});
+            return (assets);
         });
     }
+
+    
+    static convert (sqlJson: any){
+        return {
+            latitude: sqlJson.latitude,
+            longitude: sqlJson.longitude,
+            assetIdText: sqlJson.asset_id_text,
+            serialNumberText: sqlJson.serial_number_text,
+            inspection_time: sqlJson.inspection_time,
+            assetType: sqlJson.asset_type
+        };
+    };
+
 
 }
 

@@ -3,15 +3,13 @@ import '../Default.css';
 import { IonList, IonContent, IonToast } from '@ionic/react';
 import AssetListItem from '../assetListItem/AssetListItem';
 
-import ServerConverter from "./../../models/ServerConverter";
 import { Cloud } from '../../data';
 
 interface ContainerProps {
-  name: string;
   settings: any;
 }
 
-const PreviousSessionsContainer: React.FC<ContainerProps> = ({ name, settings }) => {
+const PreviousSessionsContainer: React.FC<ContainerProps> = ({ settings }) => {
   const [previousAssets, setPreviousAssets] = useState([]);
   const [successfulDownloadToast, setSuccessfulDownloadToast] = useState(false);
   const [noRemoteAssetsToast, setNoRemoteAssetsToast] = useState(false);
@@ -34,20 +32,11 @@ const PreviousSessionsContainer: React.FC<ContainerProps> = ({ name, settings })
     };
   }, []);
 
-  function convertFromServer(serverJson: any) {
-    let serverConverter = new ServerConverter();
-    return serverConverter.convert(serverJson);
-  }
-
   return (
     <IonContent>
       <IonList inset={true}>
-        {Array.isArray(previousAssets) && previousAssets.map((previousAsset) => {
-          return convertFromServer(previousAsset);
-        }).map((previousAsset, i) => <AssetListItem
-          key={i}
-          asset={previousAsset}
-          />
+        {Array.isArray(previousAssets) && previousAssets.map((previousAsset, i) =>
+          <AssetListItem key={i} asset={previousAsset} />
         )}
       </IonList>
 
