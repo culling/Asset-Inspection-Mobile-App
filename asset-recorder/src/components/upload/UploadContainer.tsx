@@ -3,7 +3,8 @@ import './../Default.css';
 
 import { IonButton, IonToast } from '@ionic/react';
 // import axios from 'axios';
-import { AssetsContextConsumer, saveLocal,  } from '../../contexts/AssetsContext';
+import { AssetsContextConsumer, } from '../../contexts/AssetsContext';
+
 import {Assets} from './../../types';
 import {Cloud} from '../../dataLocations';
 import UploadInformationContainer from './UploadInformationContainer';
