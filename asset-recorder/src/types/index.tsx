@@ -1,5 +1,5 @@
-import { Asset, Assets } from "./Asset";
-import {Settings} from './Settings';
+import { Asset, Assets } from "./asset/Asset";
+import {Settings} from './settings/Settings';
 export type {
     Asset,
     Assets,
