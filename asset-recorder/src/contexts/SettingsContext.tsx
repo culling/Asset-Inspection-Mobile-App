@@ -11,7 +11,7 @@ let SettingsContext = createContext({} as Settings);
  * Default settings used for inital setup
  */
 const defaultSettings = {
-    company: "Acme Inc. 2",
+    company: "Victoria University of Wellington",
     defaultAssetType: "Computer",
     serverUrl: "https://assetrecorder-postgress-1.herokuapp.com"
 } as Settings

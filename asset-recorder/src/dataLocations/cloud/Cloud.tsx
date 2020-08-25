@@ -1,8 +1,6 @@
 import axios from 'axios';
 
 import { Asset, Settings } from '../../types';
-
-// import { saveLocal } from '../../models/AssetsContext';
 import { Local } from '..';
 
 class Cloud {
@@ -56,7 +54,10 @@ class Cloud {
         });
     }
 
-    
+    /**
+     * Conver results back from the server to the local Asset type
+     * @param sqlJson is the SQL json for each row returned from the remote server
+     */
     static convert (sqlJson: any){
         return {
             latitude: sqlJson.latitude,
