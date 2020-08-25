@@ -9,9 +9,9 @@ import PreviousSessionsContainer from '../components/previousSessions/PreviousSe
 import CurrentSessionContainer from '../components/currentSession/CurrentSessionContainer';
 import SettingsContainer from '../components/settings/SettingsContainer';
 import './Page.css';
-import { SettingsContextConsumer, Settings } from '../contexts/SettingsContext';
-import { AssetsContextConsumer, Assets } from '../contexts/AssetsContext';
-
+import { SettingsContextConsumer } from '../contexts/SettingsContext';
+import { AssetsContextConsumer } from '../contexts/AssetsContext';
+import {Assets, Settings} from '../types';
 
 
 const Page: React.FC = () => {
@@ -73,7 +73,7 @@ const Page: React.FC = () => {
             }
 
             {name === "PreviousSessions" &&
-              <PreviousSessionsContainer name={name} settings={settings} />
+              <PreviousSessionsContainer settings={settings} />
             }
 
             {name === "CurrentSession" &&
