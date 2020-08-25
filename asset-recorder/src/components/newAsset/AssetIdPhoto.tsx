@@ -25,6 +25,7 @@ const AssetIdPhoto: React.FC<ContainerProps> = (
         });
         let imageUrl = (image.dataUrl != undefined) ? image.dataUrl : "";
 
+
         props.setState({
             ...props.state,
             showAssetIdPhoto: true,

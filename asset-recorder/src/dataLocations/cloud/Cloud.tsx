@@ -20,16 +20,16 @@ class Cloud {
             }
 
             console.log("Asset to be loaded to cloud:", asset);
-            asset.assetIdPhoto = null;
-            asset.assetIdPhotoUrl = null;
-            asset.serialNumberPhoto = null;
-            asset.serialNumberPhotoUrl = null;
+            // asset.assetIdPhoto = null;
+            // asset.assetIdPhotoUrl = null;
+            // asset.serialNumberPhoto = null;
+            // asset.serialNumberPhotoUrl = null;
 
-            axios.post(`${settings.serverUrl}/assets`, asset)
+            axios.post(`${settings.serverUrl}/assets`, asset, {headers: {'Content-Type': 'application/json',"Access-Control-Allow-Origin": "*"}})
                 .then(response => {
                     console.log("Response: " + JSON.stringify(response));
                     countSaved++;
-                    Local.saveAssets(assets);
+                    // Local.saveAssets(assets);
                 })
                 .catch(e => {
                     assets.push(asset);

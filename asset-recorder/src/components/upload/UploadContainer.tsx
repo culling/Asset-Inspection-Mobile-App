@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './../Default.css';
 
 import { IonButton, IonToast } from '@ionic/react';
-// import axios from 'axios';
 import { AssetsContextConsumer, } from '../../contexts/AssetsContext';
 
 import {Assets} from './../../types';

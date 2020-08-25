@@ -10,7 +10,7 @@ export interface Asset {
     assetIdText: string;
     assetIdPhoto?: any;
     assetIdPhotoUrl?: any;
-    serialNumberText: string;
+    serialNumberText: any;
     serialNumberPhoto?: any;
     serialNumberPhotoUrl?: any;
     company?: string;
