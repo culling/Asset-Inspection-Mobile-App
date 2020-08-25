@@ -20,16 +20,12 @@ class Cloud {
             }
 
             console.log("Asset to be loaded to cloud:", asset);
-            // asset.assetIdPhoto = null;
-            // asset.assetIdPhotoUrl = null;
-            // asset.serialNumberPhoto = null;
-            // asset.serialNumberPhotoUrl = null;
 
             axios.post(`${settings.serverUrl}/assets`, asset, {headers: {'Content-Type': 'application/json',"Access-Control-Allow-Origin": "*"}})
                 .then(response => {
                     console.log("Response: " + JSON.stringify(response));
                     countSaved++;
-                    // Local.saveAssets(assets);
+                    Local.saveAssets(assets);
                 })
                 .catch(e => {
                     assets.push(asset);
@@ -65,7 +61,9 @@ class Cloud {
             assetIdText: sqlJson.asset_id_text,
             serialNumberText: sqlJson.serial_number_text,
             inspection_time: sqlJson.inspection_time,
-            assetType: sqlJson.asset_type
+            assetType: sqlJson.asset_type,
+            assetIdPhotoUrl: sqlJson.asset_id_photo_url,
+            serialNumberPhotoUrl: sqlJson.serial_number_photo_url
         };
     };
 

@@ -15,8 +15,10 @@ const CurrentSessionContainer: React.FC<ContainerProps> = ({ name, assetsProps }
   const [selectedAssets, setSelectedAssets] = useState([] as Asset[]);
   const [assets, setAssets] = useState(assetsProps);
 
+
   const clearCheckboxes = () => {
     document.querySelectorAll("ion-checkbox").forEach(checkbox => checkbox.checked = false);
+    window.location.reload();
   };
 
   return (
