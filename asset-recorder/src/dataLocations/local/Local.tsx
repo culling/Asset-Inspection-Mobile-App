@@ -1,6 +1,5 @@
 import { Asset, Settings } from '../../types';
 import { Plugins } from '@capacitor/core';
-// import { Settings } from '../../models/SettingsContext';
 
 const { Storage } = Plugins;
 
@@ -16,6 +15,10 @@ class Local {
         });
     }
 
+    /** 
+     * Load Assets
+     * @param callback is called with the loaded assets
+     */
     static async loadAssets(callback: any) {
         Storage.get({ key: 'assets' }).then(
             (result) => {
@@ -27,6 +30,10 @@ class Local {
         )
     }
 
+    /**
+     * Load settings
+     * @param callback is called with the loaded settings
+     */
     static async loadSettings(callback: any) {
         Storage.get({ key: 'settings' }).then(
             (result) => {
