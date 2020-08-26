@@ -45,7 +45,7 @@ const PreviousSessionsContainer: React.FC<ContainerProps> = ({ settings }) => {
             )}
           </IonList> :
           <div style={{ "height": "100%", marginLeft: "auto", marginRight: "auto", width:"100%", verticalAlign:"middle", alignItems:"center", justifyContent:"center", display: "flex" }}>
-            <IonSpinner name="crescent" style={{ "height": "100%", width:"10%",  verticalAlign:"middle", alignItems:"center", justifyContent:"center"  }} />
+            <IonSpinner name="crescent" style={{ "height": "50%", width:"50%",  verticalAlign:"middle", alignItems:"center", justifyContent:"center"  }} />
           </div>
       }
 
