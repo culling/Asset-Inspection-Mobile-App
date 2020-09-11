@@ -22,12 +22,12 @@ class Cloud {
             console.log("Asset to be loaded to cloud:", asset);
 
             axios.post(`${settings.serverUrl}/assets`, asset, {headers: {'Content-Type': 'application/json',"Access-Control-Allow-Origin": "*"}})
-                .then(response => {
+                .then((response: any) => {
                     console.log("Response: " + JSON.stringify(response));
                     countSaved++;
                     Local.saveAssets(assets);
                 })
-                .catch(e => {
+                .catch((e: any) => {
                     assets.push(asset);
                     callback(e, countSaved);
                 });

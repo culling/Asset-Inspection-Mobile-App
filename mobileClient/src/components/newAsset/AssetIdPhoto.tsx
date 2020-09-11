@@ -1,7 +1,7 @@
 import React from 'react';
 import '../Default.css';
 import { IonImg, IonButton } from '@ionic/react';
-import { Camera, CameraResultType } from '@capacitor/core';
+import { Camera, CameraResultType, CameraDirection } from '@capacitor/core';
 
 
 interface ContainerProps {
@@ -20,8 +20,9 @@ const AssetIdPhoto: React.FC<ContainerProps> = (
     const takeAssetIdPicture = async () => {
         const image = await Camera.getPhoto({
             quality: 90,
-            allowEditing: false,
-            resultType: CameraResultType.DataUrl
+            allowEditing: true,
+            resultType: CameraResultType.DataUrl, 
+            direction: CameraDirection.Rear,
         });
         let imageUrl = (image.dataUrl != undefined) ? image.dataUrl : "";
 
@@ -46,7 +47,7 @@ const AssetIdPhoto: React.FC<ContainerProps> = (
                             <IonImg style={{ 'border': '1px solid black', 'minHeight': '100px' }} src={props.state.assetIdPhotoUrl} ></IonImg>
                         }
                         <IonButton onClick={
-                            e => props.setState({ ...props.state, showAssetIdPhoto: !props.state.showAssetIdPhoto })
+                            (e:any) => props.setState({ ...props.state, showAssetIdPhoto: !props.state.showAssetIdPhoto })
                         } expand="block">
                             {props.state.showAssetIdPhoto ?
                                 <span>Hide Asset Id Photo</span> :

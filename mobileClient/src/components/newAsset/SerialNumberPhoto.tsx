@@ -1,7 +1,7 @@
 import React from 'react';
 import '../Default.css';
 import { IonImg, IonButton } from '@ionic/react';
-import { Camera, CameraResultType } from '@capacitor/core';
+import { Camera, CameraResultType, CameraDirection } from '@capacitor/core';
 
 
 interface ContainerProps {
@@ -18,8 +18,9 @@ const SerialNumberPhoto: React.FC<ContainerProps> = (
     const takeSerialNumberPicture = async () => {
         const image = await Camera.getPhoto({
             quality: 90,
-            allowEditing: false,
-            resultType: CameraResultType.DataUrl
+            allowEditing: true,
+            resultType: CameraResultType.DataUrl, 
+            direction: CameraDirection.Rear,
         });
         let imageUrl = (image.dataUrl != undefined) ? image.dataUrl : "";
 
