@@ -1,6 +1,6 @@
 # Asset Inspection Mobile App
 ## Background
-The asset inspection mobile app was created as a university project for SWEN325 - Software Development for Mobile Platforms.
+The asset inspection mobile app was created as a university project for Software Development for Mobile Platforms.
 
 Asset management is a way to track and document assets owned by a company/organisation. Many organisations do not do asset management because it is expensive/time consuming. Manual asset data entry is not uncommon and has many potential problems, these include
 + problems with data entry (mistyped barcodes etc)
